@@ -1,6 +1,6 @@
 package com.kaishengit.webservlet;
 
-import com.kaishengit.uril.HttpUtil;
+import com.kaishengit.util.HttpUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
