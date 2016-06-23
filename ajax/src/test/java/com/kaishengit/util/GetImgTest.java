@@ -17,6 +17,15 @@ public class GetImgTest {
 
     Logger logger = LoggerFactory.getLogger(GetImgTest.class);
 
+
+    @Test
+    public void getRequestString(){
+        String url = "http://36kr.com/feed";
+        String text = HttpUtil.getRequestString(url);
+        String text2 = HttpUtil.getRequestText(url);
+        System.out.println(text);
+    }
+
     @Test
     public void getRequestImg() {
 

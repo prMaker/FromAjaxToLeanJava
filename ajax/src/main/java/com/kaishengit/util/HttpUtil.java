@@ -55,4 +55,25 @@ public class HttpUtil {
             throw new RuntimeException("服务器请求异常",e);
         }
     }
+
+    public static String getRequestString(String url){
+
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpGet httpGet = new HttpGet(url);
+        try {
+            HttpResponse httpResponse = httpClient.execute(httpGet);
+            int status = httpResponse.getStatusLine().getStatusCode();
+            if(status==200){
+                InputStream inputStream = httpResponse.getEntity().getContent();
+                return IOUtils.toString(inputStream);
+            }else{
+                throw new RuntimeException("请求服务器异常");
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException("请求服务器异常",e);
+        }
+
+
+    }
 }
