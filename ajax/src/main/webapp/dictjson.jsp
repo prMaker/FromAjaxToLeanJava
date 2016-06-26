@@ -27,15 +27,14 @@
         if (event.keyCode == 13) {
             $.get("/dictjson.json", {"keyword":keyword})
                     .done(function (result) {
-                        console.log(result);
+                        console.log($(result).length);
                     })
                     .error(function () {
                         alert("请求服务器异常！");
                     })
                     .always(function () {
-                        console.log("查询"+keyword+"失败");
-                    })
-            ;
+                        console.log("查询"+keyword);
+                    });
         }
     });
 
