@@ -2,16 +2,11 @@ package com.kaishengit;
 
 import com.kaishengit.pojo.User;
 import com.kaishengit.util.MybatisUtil;
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.Reader;
 import java.util.List;
 
 /**
