@@ -21,7 +21,7 @@ public class MessageDaoTest {
 
     @Test
     public void saveTest(){
-        Message message = new Message("Jone","message3");
+        Message message = new Message("Jack","message4");
         messageDao.save(message);
     }
 }
