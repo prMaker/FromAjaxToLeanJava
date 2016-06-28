@@ -37,8 +37,8 @@
       <file leaf-file-name="UserMapper.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4">
-              <caret line="8" column="29" selection-start-line="0" selection-start-column="0" selection-end-line="65" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.5">
+              <caret line="10" column="51" selection-start-line="10" selection-start-column="51" selection-end-line="10" selection-end-column="51" />
               <folding>
                 <marker date="1467092000389" expanded="true" signature="302:322" placeholder="select * fro... user" />
                 <marker date="1467092000389" expanded="true" signature="799:831" placeholder="SELECT * FRO... user" />
@@ -988,7 +988,7 @@
       <option name="number" value="Default" />
       <updated>1467014501605</updated>
       <workItem from="1467014508954" duration="5778000" />
-      <workItem from="1467080498034" duration="9976000" />
+      <workItem from="1467080498034" duration="10534000" />
     </task>
     <servers />
   </component>
@@ -1025,7 +1025,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15754000" />
+    <option name="totallyTimeSpent" value="16312000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1289,8 +1289,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4">
-          <caret line="8" column="29" selection-start-line="0" selection-start-column="0" selection-end-line="65" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.5">
+          <caret line="10" column="51" selection-start-line="10" selection-start-column="51" selection-end-line="10" selection-end-column="51" />
           <folding>
             <marker date="1467092000389" expanded="true" signature="302:322" placeholder="select * fro... user" />
             <marker date="1467092000389" expanded="true" signature="799:831" placeholder="SELECT * FRO... user" />
