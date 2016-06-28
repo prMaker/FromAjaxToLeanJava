@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kaishengit.mapper.UserMapper">
+
+    <select id="findByQueryParams" parameterType="map" resultType="User">
+        select * from `user` 
+        <where>
+            <if test="name != null and name != ''">
+                `name` = #{name}
+            </if>
+            <if test="password != null and password != ''">
+                and `password` = #{password}
+            </if>
+            <if test="address != null and address != ''">
+                and `address` = #{address}
+            </if>
+        </where>
+    </select>
+    
+    <select id="findByIdList" parameterType="list" resultType="User">
+        SELECT * FROM `user` WHERE id IN
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+
+    </select>
+
+    <insert id="batchSave" parameterType="list">
+        insert into `user` (`name`,`password`) values
+        <foreach collection="list" item="user" separator=",">
+            (#{user.name},#{user.password})
+        </foreach>
+    </insert>
+    
+    <select id="findByParams" resultType="User">
+        select * from `user` WHERE `name` = #{username} and `password` = #{password};
+    </select>
+
+    <select id="findByMap" parameterType="map" resultType="User">
+        select * from `user` WHERE `name` = #{username} and password = #{password};
+    </select>
+
+
+    <select id="findById" parameterType="int" resultType="com.kaishengit.pojo.User">
+        SELECT `date`,id,`name`,password,address FROM `user` WHERE id = #{id}
+    </select>
+
+    <insert id="save" parameterType="com.kaishengit.pojo.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `user` (`name`,password,address) VALUES (#{name},#{password},#{address})
+    </insert>
+
+    <update id="update" parameterType="com.kaishengit.pojo.User">
+        UPDATE `user` SET `name`=#{name} WHERE id=#{id}
+    </update>
+
+    <select id="findAll" resultType="com.kaishengit.pojo.User">
+        SELECT `date`,id,`name`,password,address FROM `user`
+    </select>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM `user` WHERE id=#{id}
+    </delete>
+</mapper>
