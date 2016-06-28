@@ -3,7 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    
+
+    <typeAliases>
+        <typeAlias type="com.kaishengit.pojo.User" alias="User"/>
+    </typeAliases>
+
     <environments default="dev">
         <environment id="dev">
             <transactionManager type="JDBC"></transactionManager>
@@ -28,6 +32,7 @@
 
     <mappers>
         <mapper resource="mapper/UserMapper.xml"/>
+        <mapper resource="mapper/MovieMapper.xml"/>
     </mappers>
     
 </configuration>

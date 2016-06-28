@@ -11,7 +11,7 @@ import java.io.Reader;
 /**
  * Created by Administrator on 2016/6/27.
  */
-public class MybatisUtil {
+public class MyBatisUtil {
 
     private static SqlSession sqlSession = sqlSession();
 
