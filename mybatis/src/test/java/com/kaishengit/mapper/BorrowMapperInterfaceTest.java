@@ -23,12 +23,5 @@ public class BorrowMapperInterfaceTest {
         sqlSession.close();
     }
 
-    @Test
-    public void findByCidTest(){
-        SqlSession sqlSession = IBatisUtil.getSqlSession();
-        BorrowMapper borrowMapper = sqlSession.getMapper(BorrowMapper.class);
-        Borrow borrow = borrowMapper.findByCid(44);
-        logger.info("{}",borrow);
-        sqlSession.close();
-    }
+
 }

@@ -61,7 +61,7 @@ public class UserMapperInterfaceTest {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         List<User> userList = userMapper.findAll();
-        Assert.assertEquals(5, userList.size());
+        Assert.assertEquals(15, userList.size());
 
         sqlSession.close();
     }
