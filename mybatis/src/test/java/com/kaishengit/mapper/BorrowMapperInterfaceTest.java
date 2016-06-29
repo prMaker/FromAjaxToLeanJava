@@ -18,7 +18,7 @@ public class BorrowMapperInterfaceTest {
     public void findByIdTest(){
         SqlSession sqlSession = IBatisUtil.getSqlSession();
         BorrowMapper borrowMapper = sqlSession.getMapper(BorrowMapper.class);
-        Borrow borrow = borrowMapper.findById(15);
+        Borrow borrow = borrowMapper.findById(14);
         logger.debug("{}",borrow);
         sqlSession.close();
     }

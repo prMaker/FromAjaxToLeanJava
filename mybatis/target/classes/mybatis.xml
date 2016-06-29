@@ -7,6 +7,7 @@
 
     <typeAliases>
         <typeAlias type="com.kaishengit.pojo.User" alias="User"/>
+        <typeAlias type="com.kaishengit.pojo.Borrow" alias="Borrow"/>
     </typeAliases>
 
     <environments default="dev">
@@ -34,5 +35,9 @@
     <mappers>
         <mapper resource="mapper/UserMapper.xml"/>
     </mappers>
-    
+
+    <!--<mappers>-->
+        <!--<mapper class="com.kaishengit.mapper.UserMapper" />-->
+    <!--</mappers>-->
+
 </configuration>

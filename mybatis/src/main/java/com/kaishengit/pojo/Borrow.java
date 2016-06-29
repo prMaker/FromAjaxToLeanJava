@@ -1,13 +1,15 @@
 package com.kaishengit.pojo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/6/28.
  */
-public class Borrow {
+public class Borrow implements Serializable{
 
 
+    private static final long serialVersionUID = -6070288824694667685L;
     private Integer id;
     private Integer bid;
     private Integer cid;
@@ -15,15 +17,15 @@ public class Borrow {
     private Book book;
     private Card card;
 
-    public List<Card> getCardList() {
-        return cardList;
-    }
-
-    public void setCardList(List<Card> cardList) {
-        this.cardList = cardList;
-    }
-
-    private List<Card> cardList;
+//    public List<Card> getCardList() {
+//        return cardList;
+//    }
+//
+//    public void setCardList(List<Card> cardList) {
+//        this.cardList = cardList;
+//    }
+//
+//    private List<Card> cardList;
 
     @Override
     public String toString() {
@@ -34,17 +36,17 @@ public class Borrow {
                 ", btime='" + btime + '\'' +
                 ", book=" + book +
                 ", card=" + card +
-                ", cardList=" + cardList() +
+//                ", cardList=" + cardList() +
                 '}';
     }
 
-    private String cardList() {
-        String toString = "";
-        for (Card card : cardList) {
-            toString += card.toString()+"----";
-        }
-        return toString;
-    }
+//    private String cardList() {
+//        String toString = "";
+//        for (Card card : cardList) {
+//            toString += card.toString()+"----";
+//        }
+//        return toString;
+//    }
 
     public Book getBook() {
         return book;

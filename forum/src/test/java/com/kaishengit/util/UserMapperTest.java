@@ -23,7 +23,7 @@ public class UserMapperTest {
 
         sqlSession.close();
 
-        // _____------------------------------------
+        // --------------------------------------------------------------------------
 
         SqlSession sqlSession2 = MyBatisUtil.getSqlSession();
         UserMapper userMapper2 = sqlSession2.getMapper(UserMapper.class);

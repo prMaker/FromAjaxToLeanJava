@@ -9,5 +9,4 @@ public interface BorrowMapper {
 
     Borrow findById(Integer id);
 
-    Borrow findByCid(Integer id);
 }

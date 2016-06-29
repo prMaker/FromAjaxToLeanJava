@@ -13,20 +13,20 @@ import java.io.Reader;
  */
 public class MyBatisUtil {
 
-    private static SqlSession sqlSession = sqlSession();
+    private static SqlSessionFactory sessionFactory = sqlSessionFactory();
 
-    public static SqlSession sqlSession() {
+    private static SqlSessionFactory sqlSessionFactory() {
         try {
             Reader reader = Resources.getResourceAsReader("mybatis.xml");
             SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader);
-            return sessionFactory.openSession();
+            return sessionFactory;
         } catch (IOException e) {
             throw new RuntimeException("",e);
         }
     }
 
     public static SqlSession getSqlSession(){
-        return sqlSession;
+        return sqlSessionFactory().openSession();
     }
 
 

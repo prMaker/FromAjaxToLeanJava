@@ -61,7 +61,7 @@ public class UserMapperInterfaceTest {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         List<User> userList = userMapper.findAll();
-        Assert.assertEquals(15, userList.size());
+        Assert.assertEquals(12, userList.size());
 
         sqlSession.close();
     }
@@ -70,7 +70,7 @@ public class UserMapperInterfaceTest {
     public void updateTest() {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        User user = userMapper.findById(12);
+        User user = userMapper.findById(14);
         user.setName("李四");
         user.setPassword("123456789");
         userMapper.update(user);
@@ -82,7 +82,7 @@ public class UserMapperInterfaceTest {
     public void deleteTest() {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        userMapper.delete(7);
+        userMapper.delete(13);
         logger.debug("删除成功");
 
         sqlSession.commit();
@@ -108,7 +108,6 @@ public class UserMapperInterfaceTest {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         User user = userMapper.findByParams("Jack", "123");
         logger.debug("{}", user);
-
         sqlSession.close();
     }
 

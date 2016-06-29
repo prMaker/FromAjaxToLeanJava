@@ -1,10 +1,13 @@
 package com.kaishengit.pojo;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/6/28.
  */
-public class Book {
+public class Book implements Serializable{
 
+    private static final long serialVersionUID = -4756283686482337964L;
     private Integer id;
     private String code;
     private String title;
