@@ -4,12 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-
     <typeAliases>
-        <typeAlias type="com.kaishengit.pojo.User" alias="User"/>
+        <typeAlias type="com.kaishengit.pojo.Borrow" alias="Borrow"/>
     </typeAliases>
 
-    <environments default="dev">
+    <environments default="test">
         <environment id="dev">
             <transactionManager type="JDBC"></transactionManager>
             <dataSource type="POOLED">
@@ -32,7 +31,7 @@
     </environments>
 
     <mappers>
-        <mapper resource="mapper/UserMapper.xml"/>
+        <mapper resource="mapper/BorrowMapper.xml"/>
     </mappers>
-    
+
 </configuration>

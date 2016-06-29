@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kaishengit.mapper.BorrowMapper">
+
+    <!--OGNL Object graph Navigation Langue-->
+
+    <!--通过alias别名来实现多表查询-->
+    <!--<select id="findById" resultType="Borrow" parameterType="int">-->
+        <!--select bid,cid,book.code as 'book.code',book.title as 'book.title',book.author as 'book.author',book.publishing as 'book.publishing'-->
+        <!--from borrow-->
+        <!--INNER JOIN book ON borrow.bid = book.id-->
+        <!--INNER JOIN card ON borrow.cid = card.id-->
+        <!--WHERE borrow.id = #{id};-->
+    <!--</select>-->
+
+    <!--resultMap-->
+
+    <select id="findById" resultType="Borrow" parameterType="int" resultMap="BorrowBookMap">
+        select bid,cid,book.code,book.title,book.author ,book.publishing
+        from borrow
+        INNER JOIN book ON borrow.bid = book.id
+        INNER JOIN card ON borrow.cid = card.id
+        WHERE borrow.id = #{id};
+    </select>
+
+    <resultMap id="BorrowBookMap" type="Borrow">
+        <id column="id" property="id"/>
+        <result column="bid" property="bid"/>
+        <result column="cid" property="cid"/>
+        <association property="book" javaType="com.kaishengit.pojo.Book" column="bid">
+            <id column="bid" property="id"/>
+            <result column="code" property="code"/>
+            <result column="title" property="title"/>
+            <result column="author" property="author"/>
+            <result column="publishing" property="publishing"/>
+        </association>
+    </resultMap>
+
+
+</mapper>

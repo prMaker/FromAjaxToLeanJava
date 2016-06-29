@@ -5,8 +5,34 @@
 
 <mapper namespace="com.kaishengit.mapper.UserMapper">
 
+    <select id="findByParamsPage" resultType="User">
+        select * from `user` limit ${start},${pageSize};
+    </select>
+
+
+    <select id="findByQueryParamsChoose" parameterType="map" resultType="User">
+        SELECT * FROM `user`
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="name != null and name != ''">
+                `name` = #{name}
+            </if>
+            <choose>
+                <when test="password != nul
+                l and password != ''">
+                    AND password = #{password}
+                </when>
+                <when test="address != null and address != ''">
+                    AND address = #{address}
+                </when>
+                <otherwise>
+                    AND 1=1
+                </otherwise>
+            </choose>
+        </trim>
+    </select>
+
     <select id="findByQueryParams" parameterType="map" resultType="User">
-        select * from `user` 
+        select * from `user`
         <where>
             <if test="name != null and name != ''">
                 `name` = #{name}
@@ -19,7 +45,7 @@
             </if>
         </where>
     </select>
-    
+
     <select id="findByIdList" parameterType="list" resultType="User">
         SELECT * FROM `user` WHERE id IN
         <foreach collection="list" item="id" open="(" close=")" separator=",">
@@ -34,7 +60,7 @@
             (#{user.name},#{user.password})
         </foreach>
     </insert>
-    
+
     <select id="findByParams" resultType="User">
         select * from `user` WHERE `name` = #{username} and `password` = #{password};
     </select>
@@ -53,7 +79,15 @@
     </insert>
 
     <update id="update" parameterType="com.kaishengit.pojo.User">
-        UPDATE `user` SET `name`=#{name} WHERE id=#{id}
+        UPDATE `user`
+        <trim suffix="" suffixOverrides=",">
+            <set>
+                <if test="name != null and name != ''">`name`=#{name},</if>
+                <if test="password != null and password != ''">`password`=#{password}, </if>
+                <if test="address != null and password != ''">address = #{address}</if>
+            </set>
+        </trim>
+        WHERE id=#{id}
     </update>
 
     <select id="findAll" resultType="com.kaishengit.pojo.User">

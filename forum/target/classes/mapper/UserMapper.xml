@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kaishengit.mapper.UserMapper">
+
+    <cache size="1024" flushInterval="60" readOnly="true"/>
+
+    <!--适用于一对多表查询 collection-->
+    <select id="findById" parameterType="int" resultMap="UserTagMap">
+        SELECT *
+        FROM t_user
+        INNER JOIN t_tag ON t_user.id=t_tag.userid
+        WHERE userid = #{id}
+    </select>
+    <resultMap id="UserTagMap" type="User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="avatar" property="avatar"/>
+        <result column="createtime" property="createtime"/>
+        <result column="logintime" property="logintime"/>
+        <result column="loginip" property="loginip"/>
+        <result column="state" property="state"/>
+        <collection property="tagList" ofType="com.kaishengit.pojo.Tag">
+            <id column="t_tag.id" property="id"/>
+            <result column="tagname" property="tagname"/>
+            <result column="userid" property="userid"/>
+        </collection>
+    </resultMap>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

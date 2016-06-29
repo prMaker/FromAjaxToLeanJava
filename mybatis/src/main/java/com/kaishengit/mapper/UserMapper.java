@@ -31,6 +31,9 @@ public interface UserMapper {
 
     List<User> findByQueryParams(Map<String,Object> params);
 
+    List<User> findByQueryParamsChoose(Map<String,Object> params);
+
+    List<User> findByParamsPage(@Param("start") String start, @Param("pageSize") String pageSize);
 
 
 

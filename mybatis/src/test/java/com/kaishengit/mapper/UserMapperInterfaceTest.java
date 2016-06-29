@@ -18,19 +18,27 @@ import java.util.Map;
  */
 public class UserMapperInterfaceTest {
 
-    private Logger  logger = LoggerFactory.getLogger(UserMapperInterfaceTest.class);
+    private Logger logger = LoggerFactory.getLogger(UserMapperInterfaceTest.class);
 
     @Test
-    public void findByIdTest(){
+    public void findByIdTest() {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         User user = userMapper.findById(1);
-        logger.debug("{}",user);
+        logger.debug("{}", user);
         sqlSession.close();
+
+        // --------------------------------------------------
+
+        SqlSession sqlSession2 = MyBatisUtil.getSqlSession();
+        UserMapper userMapper2 = sqlSession2.getMapper(UserMapper.class);
+        User user2 = userMapper2.findById(1);
+        logger.debug("{}", user2);
+        sqlSession2.close();
     }
 
     @Test
-    public void saveTest(){
+    public void saveTest() {
 
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
@@ -41,28 +49,28 @@ public class UserMapperInterfaceTest {
         user.setPassword("123456789");
 
         userMapper.save(user);
-        logger.debug("{}",user);
-        logger.debug("id -> {}",user.getId());
+        logger.debug("{}", user);
+        logger.debug("id -> {}", user.getId());
         sqlSession.commit();
         sqlSession.close();
 
     }
 
     @Test
-    public void findAllTest(){
+    public void findAllTest() {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         List<User> userList = userMapper.findAll();
-        Assert.assertEquals(5,userList.size());
+        Assert.assertEquals(5, userList.size());
 
         sqlSession.close();
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        User user = userMapper.findById(3);
+        User user = userMapper.findById(12);
         user.setName("李四");
         user.setPassword("123456789");
         userMapper.update(user);
@@ -71,7 +79,7 @@ public class UserMapperInterfaceTest {
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         userMapper.delete(7);
@@ -82,36 +90,36 @@ public class UserMapperInterfaceTest {
     }
 
     @Test
-    public void findByMapTest(){
+    public void findByMapTest() {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        Map<String ,Object> userMap = Maps.newHashMap();
-        userMap.put("username","Lucy");
-        userMap.put("password","123");
+        Map<String, Object> userMap = Maps.newHashMap();
+        userMap.put("username", "Lucy");
+        userMap.put("password", "123");
         User user = userMapper.findByMap(userMap);
-        logger.debug("{}",user);
+        logger.debug("{}", user);
 
         sqlSession.close();
     }
 
     @Test
-    public void findByParamsTest(){
+    public void findByParamsTest() {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        User user = userMapper.findByParams("Jack","123");
-        logger.debug("{}",user);
+        User user = userMapper.findByParams("Jack", "123");
+        logger.debug("{}", user);
 
         sqlSession.close();
     }
 
     @Test
-    public void batchSaveTest(){
+    public void batchSaveTest() {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         List<User> userList = Lists.newArrayList();
-        userList.add(new User("user1","123"));
-        userList.add(new User("user2","123"));
-        userList.add(new User("user3","123"));
+        userList.add(new User("user1", "123"));
+        userList.add(new User("user2", "123"));
+        userList.add(new User("user3", "123"));
         userMapper.batchSave(userList);
 
         sqlSession.commit();
@@ -119,40 +127,58 @@ public class UserMapperInterfaceTest {
     }
 
     @Test
-    public void findByIdListTest(){
+    public void findByIdListTest() {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        List<Integer> idList = Lists.newArrayList(1,2,8,10);
+        List<Integer> idList = Lists.newArrayList(1, 2, 8, 10);
         List<User> userList = userMapper.findByIdList(idList);
         for (User user : userList) {
-            logger.debug("{}",user);
+            logger.debug("{}", user);
         }
 
         sqlSession.close();
     }
 
     @Test
-    public void findByQueryParams(){
+    public void findByQueryParams() {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        Map<String,Object> params = Maps.newHashMap();
-        params.put("password","123");
-        params.put("address","UK");
+        Map<String, Object> params = Maps.newHashMap();
+        params.put("password", "123");
+        params.put("address", "UK");
         List<User> userList = userMapper.findByQueryParams(params);
-        for (User user:userList){
-            logger.debug("{}",user);
+        for (User user : userList) {
+            logger.debug("{}", user);
         }
         sqlSession.close();
     }
 
+    @Test
+    public void findByQueryParamsChooseTest() {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        Map<String, Object> mapList = Maps.newHashMap();
+        mapList.put("name", "Jack");
+        mapList.put("password", "456");
+        mapList.put("address", "USA");
 
+        List<User> userList = userMapper.findByQueryParamsChoose(mapList);
+        for (User user : userList) {
+            logger.debug("{}", user);
+        }
+        sqlSession.close();
+    }
 
+    @Test
+    public void findByParamsPageTest() {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        List<User> userList = userMapper.findByParamsPage("0", "5");
+        for (int i = 0; i < userList.size(); i++) {
+            logger.debug("{}",userList.get(i));
+        }
+        sqlSession.close();
 
-
-
-
-
-
-
+    }
 
 }

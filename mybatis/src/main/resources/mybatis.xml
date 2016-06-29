@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+
     <typeAliases>
         <typeAlias type="com.kaishengit.pojo.User" alias="User"/>
     </typeAliases>
@@ -32,7 +33,6 @@
 
     <mappers>
         <mapper resource="mapper/UserMapper.xml"/>
-        <mapper resource="mapper/MovieMapper.xml"/>
     </mappers>
     
 </configuration>

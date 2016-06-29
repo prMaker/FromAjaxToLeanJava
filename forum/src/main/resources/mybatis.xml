@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-
     <typeAliases>
         <typeAlias type="com.kaishengit.pojo.User" alias="User"/>
     </typeAliases>
@@ -14,7 +13,7 @@
             <transactionManager type="JDBC"></transactionManager>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql:///mydb"/>
+                <property name="url" value="jdbc:mysql:///forum"/>
                 <property name="username" value="root"/>
                 <property name="password" value="root"/>
             </dataSource>
