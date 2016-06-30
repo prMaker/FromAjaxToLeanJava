@@ -21,10 +21,10 @@ import java.util.List;
 //@WebServlet("/jsonuser.xml")
 public class JsonUserData extends HttpServlet{
 
-    private User user1 = new User(1,"Tom","China",95.2F);
-    private User user2 = new User(2,"Jack","USA",95.2F);
-    private User user3 = new User(3,"Lily","China",95.2F);
-    private User user4 = new User(4,"Lucy","UK",95.2F);
+    private User user1 = new User(1,"Tom","China",95);
+    private User user2 = new User(2,"Jack","USA",95);
+    private User user3 = new User(3,"Lily","China",95);
+    private User user4 = new User(4,"Lucy","UK",95);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

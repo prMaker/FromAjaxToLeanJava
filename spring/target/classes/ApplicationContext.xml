@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="userDaoImpl1" class="com.kaishengit.dao.UserDaoImpl"/>
+    <bean id="userDaoImpl2" class="com.kaishengit.dao.UserDaoImpl2"/>
+    <bean id="user" class="com.kaishengit.pojo.User" scope="singleton"/>
+
+    <bean id="userService" class="com.kaishengit.service.UserService">
+        <property name="userDao" ref="userDaoImpl2"/>
+    </bean>
+
+</beans>
