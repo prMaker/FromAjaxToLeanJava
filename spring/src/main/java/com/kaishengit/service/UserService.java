@@ -13,6 +13,11 @@ public class UserService {
         this.userDao = userDao;
     }
 
+//    public UserService(UserDao userDao){
+//        this.userDao = userDao;
+//    }
+
+
     public void save(){
         System.out.println("UserService :　save() ");
         userDao.save();

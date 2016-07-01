@@ -1,12 +1,14 @@
 package com.kaishengit.dao;
 
-import com.kaishengit.pojo.User;
+import com.kaishengit.service.BookService;
 import com.kaishengit.service.UserService;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.awt.print.Book;
 
 /**
  * Created by Administrator on 2016/6/30.
@@ -21,12 +23,13 @@ public class UserDaoTestCase {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
         UserService userService = (UserService) applicationContext.getBean("userService");
         userService.save();
+    }
 
-
-        // 单例模式
-        User user = User.getUser();
-
-
+    @Test
+    public void bookServiceTest(){
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+        BookService bookService = (BookService) applicationContext.getBean("bookService");
+        bookService.show();
     }
 
 }

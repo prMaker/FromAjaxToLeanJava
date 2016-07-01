@@ -5,7 +5,11 @@ package com.kaishengit.dao;
  */
 public class UserDaoImpl2 implements UserDao {
     @Override
-    public void save() {
+    public Integer save() {
         System.out.println("UserDaoImpl2 : save");
+//        if(1==1){
+//            throw new RuntimeException("throwing Exception");
+//        }
+        return 5;
     }
 }

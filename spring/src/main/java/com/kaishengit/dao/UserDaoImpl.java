@@ -5,7 +5,8 @@ package com.kaishengit.dao;
  */
 public class UserDaoImpl implements UserDao {
     @Override
-    public void save() {
+    public Integer save() {
         System.out.println("UserDaoImpl : save ");
+        return 5;
     }
 }
