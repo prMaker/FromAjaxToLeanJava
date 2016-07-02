@@ -1,6 +1,7 @@
 package com.kaishengit.service;
 
 import com.kaishengit.dao.UserDao;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Set;
 /**
  * Created by Administrator on 2016/6/30.
  */
+@Transactional
 public class BookService {
 
 

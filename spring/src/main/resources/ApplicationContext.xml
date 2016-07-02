@@ -1,117 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-
-
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-        ">
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="userDao" class="com.kaishengit.dao.UserDaoImpl2"/>
-    <!--<bean id="userDaoImpl1" class="com.kaishengit.dao.UserDaoImpl"/>-->
+    <!--// 开启基于注解的bean管理和DI-->
+    <context:component-scan base-package="com.kaishengit"/>
 
+    <!--开启基于注解的事务-->
+    <aop:aspectj-autoproxy/>
 
-    <bean id="myAdvice" class="com.kaishengit.aop.MyAdvice"/>
+    <context:property-placeholder location="config.properties"/>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:advice id="advice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="login*"/>
+        </tx:attributes>
+    </tx:advice>
+
     <aop:config>
-        <aop:aspect ref="myAdvice">
-            <aop:pointcut id="userDaoImpl2" expression="execution(* com.kaishengit..*.*(..))"/>
-            <!--<aop:before method="beforeAdvice" pointcut-ref="userDaoImpl2"/>-->
-            <!--<aop:after-returning method="afterRuturningAdvice" pointcut-ref="userDaoImpl2" returning="result"/>-->
-            <!--<aop:after-throwing method="throwingAdvice" pointcut-ref="userDaoImpl2" throwing="e"/>-->
-            <!--<aop:after method="afterAdive" pointcut-ref="userDaoImpl2"/>-->
-
-            <aop:around method="aroundAdvice" pointcut-ref="userDaoImpl2"/>
-        </aop:aspect>
+        <aop:pointcut id="myService" expression="execution(* com.kaishengit.service..*.*(..))"/>
+        <aop:advisor advice-ref="advice" pointcut-ref="myService"/>
     </aop:config>
 
-    <!--自动注入三 名字注入 根据id名字来注入，ID不同时可能根据类型查找-->
-    <!--<bean id="userService" class="com.kaishengit.service.UserService" autowire="byName"/>-->
-
-    <!--自动注入二 自动类型注入，只能有一个符合的类型，两个报错-->
-    <bean id="userService" class="com.kaishengit.service.UserService" autowire="byType"/>
-
-    <!--自动注入一 构造器注入-->
-    <!--<bean id="userService" class="com.kaishengit.service.UserService" autowire="constructor"/>-->
-
-
-    <!--Contructor注入三 ByType-->
-    <!--<bean id="userService" class="com.kaishengit.service.UserService">-->
-    <!--<constructor-arg type="com.kaishengit.dao.UserDao" ref="userDaoImpl2"/>-->
+    <!--<bean id="tranSactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
     <!--</bean>-->
 
-    <!--Contructor注入二 ByIndex-->
-    <!--<bean id="userService" class="com.kaishengit.service.UserService">-->
-    <!--<constructor-arg index="0" ref="userDaoImpl2"/>-->
-    <!--</bean>-->
+    <!--<tx:annotation-driven transaction-manager="tranSactionManager"/>-->
 
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
 
-    <!--Constructor注入一 ByName-->
-    <!--<bean id="userService" class="com.kaishengit.service.UserService">-->
-    <!--<constructor-arg name="userDao" ref="userDaoImpl2"/>-->
-    <!--</bean>-->
+        <property name="maxTotal" value="${jdbc.maxsize}"/>
+        <property name="initialSize" value="${jdbc.initsize}"/>
+        <property name="maxIdle" value="${jdbc.maxidle}"/>
+        <property name="minIdle" value="${jdbc.minidle}"/>
+        <property name="maxWaitMillis" value="${jdbc.waitmillis}"/>
+    </bean>
 
-
-    <!--SET第四种 P注入-->
-    <!--<bean id="userService" class="com.kaishengit.service.UserService" p:userDao-ref="userDaoImpl2"/>-->
-
-    <!--SET第三种 bean注入-->
-    <!--<bean id="userService" class="com.kaishengit.service.UserService">-->
-    <!--<property name="userDao">-->
-    <!--<bean class="com.kaishengit.dao.UserDaoImpl2"/>-->
-    <!--</property>-->
-    <!--</bean>-->
-
-
-    <!--SET第二种，ref 注入-->
-    <!--<bean id="userService" class="com.kaishengit.service.UserService">-->
-    <!--<property name="userDao">-->
-    <!--<ref bean="userDaoImpl2"/>-->
-    <!--</property>-->
-    <!--</bean>-->
-
-    <!--SET第一种，简便注入-->
-    <!--<bean id="userService" class="com.kaishengit.service.UserService">-->
-    <!--<property name="userDao" ref="userDaoImpl1"/>-->
-    <!--</bean>-->
-
-
-    <!--<bean id="bookService" class="com.kaishengit.service.BookService">-->
-    <!--<property name="bookName" value="狂人日记"/>-->
-    <!--<property name="bookCode" value="101"/>-->
-    <!--<property name="lists">-->
-    <!--<list value-type="java.lang.String">-->
-    <!--<value>list1</value>-->
-    <!--<value>list2</value>-->
-    <!--<value>list3</value>-->
-    <!--</list>-->
-    <!--</property>-->
-    <!--<property name="sets">-->
-    <!--<set value-type="java.lang.String">-->
-    <!--<value>set1</value>-->
-    <!--<value>set2</value>-->
-    <!--<value>set3</value>-->
-    <!--</set>-->
-    <!--</property>-->
-    <!--<property name="maps">-->
-    <!--<map key-type="java.lang.String" value-type="java.lang.Object">-->
-    <!--<entry key="key1" value="value1"/>-->
-    <!--<entry key="key2" value="value2"/>-->
-    <!--<entry key="key3" value="value3"/>-->
-    <!--</map>-->
-    <!--</property>-->
-    <!--<property name="properties">-->
-    <!--<props value-type="java.lang.String">-->
-    <!--<prop key="properties1">value1</prop>-->
-    <!--<prop key="properties2">value2</prop>-->
-    <!--<prop key="properties3">value3</prop>-->
-    <!--</props>-->
-    <!--</property>-->
-    <!--<property name="userDao" ref="userDaoImpl2"/>-->
-    <!--</bean>-->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
 
 </beans>
