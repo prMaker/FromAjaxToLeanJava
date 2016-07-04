@@ -3,41 +3,39 @@ package com.kaishengit.pojo;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
-import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
- * Created by Administrator on 2016/7/1.
+ * Created by Administrator on 2016/7/2.
  */
 @Named
 @Scope("prototype")
-public class User implements Serializable{
+public class User {
 
-    private Date date;
     private Integer id;
+    private Timestamp timestamp;
     private String name;
     private String password;
+    private String address;
 
-    public User(Date date, Integer id, String name, String password) {
-        this.date = date;
-        this.id = id;
+    public User() {
+    }
+
+    public User(String name, String password, String address) {
         this.name = name;
         this.password = password;
+        this.address = address;
     }
 
-    public User() {}
-
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", timestamp=" + timestamp +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 
     public Integer getId() {
@@ -46,6 +44,14 @@ public class User implements Serializable{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getName() {
@@ -64,13 +70,11 @@ public class User implements Serializable{
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "date=" + date +
-                ", id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -13,44 +13,28 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!--// 开启基于注解的bean管理和DI-->
-    <context:component-scan base-package="com.kaishengit"/>
 
-    <!--开启基于注解的事务-->
+    <context:component-scan base-package="com.kaishengit"/>
     <aop:aspectj-autoproxy/>
 
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <tx:advice transaction-manager="transactionManager" id="txAdvice">
+        <tx:attributes>
+            <tx:method name="save*"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:pointcut id="service" expression="execution(* com.kaishengit.service..*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="service"/>
+    </aop:config>
+
     <context:property-placeholder location="config.properties"/>
-
-    <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-    <!--</bean>-->
-
-    <!--<tx:advice id="advice" transaction-manager="transactionManager">-->
-        <!--<tx:attributes>-->
-            <!--<tx:method name="login*"/>-->
-        <!--</tx:attributes>-->
-    <!--</tx:advice>-->
-
-    <!--<aop:config>-->
-        <!--<aop:pointcut id="myService" expression="execution(* com.kaishengit.service..*.*(..))"/>-->
-        <!--<aop:advisor advice-ref="advice" pointcut-ref="myService"/>-->
-    <!--</aop:config>-->
-
-    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="typeAliasesPackage" value="com.kaishengit.pojo"/>
-        <property name="mapperLocations" value="mapper/*.xml"/>
-    </bean>
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.kaishengit.mapper"/>
-    </bean>
-
-
-    <bean id="tranSactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-    <tx:annotation-driven transaction-manager="tranSactionManager"/>
-
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
         <property name="driverClassName" value="${jdbc.driver}"/>
         <property name="url" value="${jdbc.url}"/>
