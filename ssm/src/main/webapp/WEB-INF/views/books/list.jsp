@@ -24,6 +24,36 @@
         <div class="alert alert-danger">${message}</div>
     </c:if>
 
+    <div class="well well-sm">
+        <form action="" method="get" class="form-inline">
+            <div class="form-group">
+                <input type="text" placeholder="书籍名称" name="bookname" value="${bookname}"
+                       class="form-control"/>
+            </div>
+                <select name="type" class="form-control">
+                        <option value="">请选择类型</option>
+                    <c:forEach items="${types}" var="type">
+                        <option value="${type.id}" ${typeid == type.id ? 'selected' : ''}>${type.booktype}</option>
+                    </c:forEach>
+                </select>
+
+            <%--下拉菜单为在select中选择--%>
+
+
+                <select name="pub" class="form-control">
+                    <option value="">请选择出版社</option>
+                    <c:forEach items="${publishers}" var="publisher">
+                        <option value="${publisher.id}" ${pubid == publisher.id ? 'selected' : ''}>${publisher.pubname}</option>
+                    </c:forEach>
+                </select>
+
+            <button class="btn btn-primary">搜索</button>
+
+        </form>
+
+
+    </div>
+    
     <a href="/books/new" class="btn btn-success">添加新书</a>
     <table class="table">
         <thead>
@@ -38,7 +68,7 @@
             </tr>
         </thead>
         <tbody>
-        <c:forEach items="${bookList}" var="book">
+        <c:forEach items="${bookPage.items}" var="book">
             <tr>
                 <td>${book.bookname}</td>
                 <td>${book.bookprice}</td>
@@ -53,11 +83,15 @@
             </tr>
         </tbody>
         </c:forEach>
-
     </table>
+    <c:if test="${empty bookPage.items}">
+        <div class="alert-info"><h3>没有找到相关信息</h3></div>
+    </c:if>
+    <ul class="pagination" id="page"></ul>
 </div>
 
 <script src="/static/js/jquery-1.11.3.min.js"></script>
+<script src="/static/js/jquery.twbsPagination.min.js"></script>
 <script>
 
     $(function () {
@@ -66,6 +100,16 @@
             if(confirm("确定删除该书籍")){
                 window.location.href="/books/"+id+"/del";
             }
+        });
+
+        $("#page").twbsPagination({
+            totalPages:${bookPage.totalPages},
+            visiblePages:5,
+            first:'首页',
+            prev:'上一页',
+            next:'下一页',
+            last:'末页',
+            href:'?p={{number}}'
         });
     });
 

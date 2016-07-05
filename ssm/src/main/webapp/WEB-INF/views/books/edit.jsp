@@ -25,6 +25,7 @@
             <div class="col-xs-6">
                 <div class="form-group">
                     <label>书名：</label>
+                    <input type="hidden" value="${book.id}" name="id">
                     <input type="text" class="form-control" name="bookname" value="${book.bookname}">
                 </div>
 
@@ -56,6 +57,9 @@
                     <label>出版社：</label>
                     <select name="pubid" class="form-control">
                         <c:forEach items="${publisherList}" var="pub">
+
+                            <%--${jstl中三元操作符的使用}--%>
+
                             <option value="${pub.id}" ${pub.id == book.pubid ? 'selected' : ''}>${pub.pubname}</option>
                         </c:forEach>
                     </select>

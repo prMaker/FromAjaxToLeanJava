@@ -19,7 +19,20 @@
         select t_book.*,t_booktype.booktype AS 'booktype.booktype',t_publisher.pubname AS 'publisher.pubname',t_publisher.id AS 'publisher.id',t_booktype.id AS 'booktype.id' from t_book
         INNER JOIN t_publisher ON t_book.pubid = t_publisher.id
         INNER JOIN t_booktype ON t_book.typeid = t_booktype.id
-        ORDER BY t_book.id DESC ;
+        <where>
+
+            <if test="params.bookname != null and params.bookname != ''">
+                t_book.bookname LIKE CONCAT('%',#{params.bookname},'%')
+            </if>
+            <if test="params.typeid != null and params.typeid != ''">
+                and t_book.typeid = #{params.typeid}
+            </if>
+            <if test="params.pubid != null and params.pubid != ''">
+                and t_book.pubid = #{params.pubid}
+            </if>
+        </where>
+        ORDER BY t_book.id DESC
+        limit #{params.start},#{params.pageSize};
     </select>
 
     <select id="findById" resultType="Book">
@@ -28,6 +41,22 @@
 
     <select id="delById" >
         DELETE FROM t_book WHERE id = #{id}
+    </select>
+    <select id="count" resultType="java.lang.Long">
+        select COUNT(*)
+        from t_book
+        <where>
+
+            <if test="params.bookname != null and params.bookname != ''">
+                t_book.bookname LIKE CONCAT('%',#{params.bookname},'%')
+            </if>
+            <if test="params.typeid != null and params.typeid != ''">
+                and t_book.typeid = #{params.typeid}
+            </if>
+            <if test="params.pubid != null and params.pubid != ''">
+                and t_book.pubid = #{params.pubid}
+            </if>
+        </where>;
     </select>
 
 </mapper>
