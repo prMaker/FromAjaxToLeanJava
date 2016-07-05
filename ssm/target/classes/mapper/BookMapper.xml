@@ -5,4 +5,29 @@
 
 <mapper namespace="com.kaishengit.mapper.BookMapper">
 
+    <insert id="save" parameterType="Book">
+        INSERT INTO t_book (bookname, bookprice, bookauthor, booknum, typeid, pubid, bookpic)
+                  VALUES (#{bookname},#{bookprice},#{bookauthor},#{booknum},#{typeid},#{pubid},'')
+    </insert>
+    <update id="update">
+        UPDATE t_book SET bookname=#{bookname},bookprice=#{bookprice},bookauthor=#{bookauthor},booknum=#{booknum},
+                          typeid=#{typeid},pubid=#{pubid}
+        where id=#{id}
+    </update>
+
+    <select id="findAll" resultType="Book">
+        select t_book.*,t_booktype.booktype AS 'booktype.booktype',t_publisher.pubname AS 'publisher.pubname',t_publisher.id AS 'publisher.id',t_booktype.id AS 'booktype.id' from t_book
+        INNER JOIN t_publisher ON t_book.pubid = t_publisher.id
+        INNER JOIN t_booktype ON t_book.typeid = t_booktype.id
+        ORDER BY t_book.id DESC ;
+    </select>
+
+    <select id="findById" resultType="Book">
+        select * from t_book WHERE id = #{id};
+    </select>
+
+    <select id="delById" >
+        DELETE FROM t_book WHERE id = #{id}
+    </select>
+
 </mapper>
