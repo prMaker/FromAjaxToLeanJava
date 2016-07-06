@@ -2,6 +2,7 @@ D:\project\ssm\src\main\java\com\kaishengit\mapper\BookTypeMapper.java
 D:\project\ssm\src\main\java\com\kaishengit\pojo\BookType.java
 D:\project\ssm\src\main\java\com\kaishengit\exception\DataNotFoundException.java
 D:\project\ssm\src\main\java\com\kaishengit\mapper\PublisherMapper.java
+D:\project\ssm\src\main\java\com\kaishengit\controller\DataTableController.java
 D:\project\ssm\src\main\java\com\kaishengit\mapper\BookMapper.java
 D:\project\ssm\src\main\java\com\kaishengit\pojo\Book.java
 D:\project\ssm\src\main\java\com\kaishengit\util\Page.java

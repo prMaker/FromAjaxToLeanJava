@@ -67,4 +67,7 @@ public class BookService {
         return bookPage;
     }
 
+    public List<Book> findBookAll() {
+        return bookMapper.findBookAll();
+    }
 }
