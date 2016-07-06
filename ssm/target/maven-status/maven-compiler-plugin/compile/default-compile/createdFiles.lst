@@ -3,8 +3,9 @@ com\kaishengit\mapper\BookMapper.class
 com\kaishengit\pojo\Publisher.class
 com\kaishengit\util\Page.class
 com\kaishengit\pojo\BookType.class
-com\kaishengit\controller\BookController.class
-com\kaishengit\exception\DataNotFoundException.class
 com\kaishengit\service\BookService.class
+com\kaishengit\exception\DataNotFoundException.class
+com\kaishengit\controller\BookController.class
 com\kaishengit\mapper\PublisherMapper.class
+com\kaishengit\util\Strings.class
 com\kaishengit\pojo\Book.class

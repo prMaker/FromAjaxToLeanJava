@@ -39,7 +39,6 @@
 
             <%--下拉菜单为在select中选择--%>
 
-
                 <select name="pub" class="form-control">
                     <option value="">请选择出版社</option>
                     <c:forEach items="${publishers}" var="publisher">
@@ -95,7 +94,7 @@
 <script>
 
     $(function () {
-        $("#del").click(function () {
+        $(".del").click(function () {
             var id = $(this).attr("rel");
             if(confirm("确定删除该书籍")){
                 window.location.href="/books/"+id+"/del";

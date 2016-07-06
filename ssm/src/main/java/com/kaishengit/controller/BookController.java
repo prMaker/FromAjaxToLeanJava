@@ -6,6 +6,7 @@ import com.kaishengit.pojo.BookType;
 import com.kaishengit.pojo.Publisher;
 import com.kaishengit.service.BookService;
 import com.kaishengit.util.Page;
+import com.kaishengit.util.Strings;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
@@ -42,6 +43,7 @@ public class BookController {
                            @RequestParam(required = false,defaultValue = "") Integer pub,
                            @RequestParam(required = false,defaultValue = "") String bookname
             , Model model){
+        bookname = Strings.toUTF8(bookname);
         Map<String,Object> params = new HashMap<>();
         params.put("pubid",pub);
         params.put("typeid",type);
@@ -78,8 +80,9 @@ public class BookController {
 
     @RequestMapping(value = "/{id:\\d+}/del",method = RequestMethod.GET)
     public String delBook(@PathVariable("id") Integer id,RedirectAttributes redirectAttributes){
-        redirectAttributes.addFlashAttribute("message","删除成功");
+
         bookService.delById(id);
+        redirectAttributes.addFlashAttribute("message","删除成功");
         return "redirect:/books";
     }
 
