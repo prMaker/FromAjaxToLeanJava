@@ -67,4 +67,19 @@ public class BookService {
         return bookPage;
     }
 
+    public List<Book> findAllBook() {
+        return bookMapper.findAllBook();
+    }
+
+    public List<Book> findBookByData(Map<String,Object> param) {
+        return bookMapper.findBookByData(param);
+    }
+
+    public Long bookCountByData(Map<String, Object> param) {
+        return bookMapper.countByData(param);
+    }
+
+    public Long bookCount() {
+        return bookMapper.bookCount();
+    }
 }

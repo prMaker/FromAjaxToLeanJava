@@ -23,4 +23,12 @@ public interface BookMapper {
     void update(Book book);
 
     Long count(@Param("params") Map<String, Object> params);
+
+    List<Book> findAllBook();
+
+    List<Book> findBookByData(@Param("param") Map<String, Object> param);
+
+    Long countByData(@Param("param") Map<String, Object> param);
+
+    Long bookCount();
 }

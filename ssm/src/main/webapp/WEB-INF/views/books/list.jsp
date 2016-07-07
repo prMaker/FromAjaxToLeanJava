@@ -67,21 +67,21 @@
             </tr>
         </thead>
         <tbody>
-        <c:forEach items="${bookPage.items}" var="book">
-            <tr>
-                <td>${book.bookname}</td>
-                <td>${book.bookprice}</td>
-                <td>${book.bookauthor}</td>
-                <td>${book.booknum}</td>
-                <td>${book.bookType.booktype}</td>
-                <td>${book.publisher.pubname}</td>
-                <td>
-                    <a href="javascript:;" class="del btn btn-danger" rel="${book.id}" id="del">删除</a>
-                    <a href="/books/${book.id}/edit" class="btn btn-success">修改</a>
-                </td>
-            </tr>
+            <c:forEach items="${bookPage.items}" var="book">
+                <tr>
+                    <td>${book.bookname}</td>
+                    <td>${book.bookprice}</td>
+                    <td>${book.bookauthor}</td>
+                    <td>${book.booknum}</td>
+                    <td>${book.bookType.booktype}</td>
+                    <td>${book.publisher.pubname}</td>
+                    <td>
+                        <a href="javascript:;" class="del btn btn-danger" rel="${book.id}" id="del">删除</a>
+                        <a href="/books/${book.id}/edit" class="btn btn-success">修改</a>
+                    </td>
+                </tr>
+            </c:forEach>
         </tbody>
-        </c:forEach>
     </table>
     <c:if test="${empty bookPage.items}">
         <div class="alert-info"><h3>没有找到相关信息</h3></div>
@@ -108,7 +108,7 @@
             prev:'上一页',
             next:'下一页',
             last:'末页',
-            href:'?p={{number}}'
+            href:'?bookname='+encodeURIComponent('${bookname}')+'&type=${typeid}&pub=${pubid}&p={{number}}'
         });
     });
 

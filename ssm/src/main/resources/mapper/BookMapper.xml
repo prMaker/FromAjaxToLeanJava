@@ -58,5 +58,34 @@
             </if>
         </where>;
     </select>
+    <select id="findAllBook" resultType="com.kaishengit.pojo.Book">
+        select t_book.*,t_booktype.booktype AS 'booktype.booktype',t_publisher.pubname AS 'publisher.pubname',t_publisher.id AS 'publisher.id',t_booktype.id AS 'booktype.id' from t_book
+        INNER JOIN t_publisher ON t_book.pubid = t_publisher.id
+        INNER JOIN t_booktype ON t_book.typeid = t_booktype.id;
+    </select>
+
+    <select id="findBookByData" resultType="com.kaishengit.pojo.Book">
+        select t_book.*,t_booktype.booktype AS 'booktype.booktype',t_publisher.pubname AS 'publisher.pubname',t_publisher.id AS 'publisher.id',t_booktype.id AS 'booktype.id' from t_book
+        INNER JOIN t_publisher ON t_book.pubid = t_publisher.id
+        INNER JOIN t_booktype ON t_book.typeid = t_booktype.id
+        <where>
+            <if test="param.keyword != null and param.keyword != ''">
+                t_book.bookname LIKE CONCAT('%',#{param.keyword},'%')
+            </if>
+        </where>
+        order by ${param.sortColumn} ${param.sortType}
+        limit ${param.start},${param.length};
+    </select>
+    <select id="countByData" resultType="java.lang.Long">
+        select COUNT(*) from t_book
+        <where>
+            <if test="param.bookname != null and param.bookname != ''">
+                t_book.bookname LIKE CONCAT('%',#{param.bookname},'%')
+            </if>
+        </where>
+    </select>
+    <select id="bookCount" resultType="java.lang.Long">
+        select count(*) from t_book;
+    </select>
 
 </mapper>
