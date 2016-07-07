@@ -60,16 +60,13 @@
             </if>
         </where>;
     </select>
-<<<<<<< HEAD
+	
     <select id="findAllBook" resultType="com.kaishengit.pojo.Book">
-=======
-    <select id="findBookAll" resultType="com.kaishengit.pojo.Book">
->>>>>>> master
         select t_book.*,t_booktype.booktype AS 'booktype.booktype',t_publisher.pubname AS 'publisher.pubname',t_publisher.id AS 'publisher.id',t_booktype.id AS 'booktype.id' from t_book
         INNER JOIN t_publisher ON t_book.pubid = t_publisher.id
         INNER JOIN t_booktype ON t_book.typeid = t_booktype.id;
     </select>
-<<<<<<< HEAD
+	
 
     <select id="findBookByData" resultType="com.kaishengit.pojo.Book">
         select t_book.*,t_booktype.booktype AS 'booktype.booktype',t_publisher.pubname AS 'publisher.pubname',t_publisher.id AS 'publisher.id',t_booktype.id AS 'booktype.id' from t_book
@@ -94,7 +91,5 @@
     <select id="bookCount" resultType="java.lang.Long">
         select count(*) from t_book;
     </select>
-=======
->>>>>>> master
 
 </mapper>

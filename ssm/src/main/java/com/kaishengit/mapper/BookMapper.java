@@ -24,7 +24,6 @@ public interface BookMapper {
 
     Long count(@Param("params") Map<String, Object> params);
 
-<<<<<<< HEAD
     List<Book> findAllBook();
 
     List<Book> findBookByData(@Param("param") Map<String, Object> param);
@@ -32,7 +31,4 @@ public interface BookMapper {
     Long countByData(@Param("param") Map<String, Object> param);
 
     Long bookCount();
-=======
-    List<Book> findBookAll();
->>>>>>> master
 }

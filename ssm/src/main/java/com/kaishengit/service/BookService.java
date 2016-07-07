@@ -66,8 +66,7 @@ public class BookService {
         bookPage.setItems(bookList);
         return bookPage;
     }
-
-<<<<<<< HEAD
+	
     public List<Book> findAllBook() {
         return bookMapper.findAllBook();
     }
@@ -82,9 +81,5 @@ public class BookService {
 
     public Long bookCount() {
         return bookMapper.bookCount();
-=======
-    public List<Book> findBookAll() {
-        return bookMapper.findBookAll();
->>>>>>> master
     }
 }
