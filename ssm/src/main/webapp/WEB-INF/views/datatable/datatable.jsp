@@ -134,6 +134,7 @@
                             <input type="text" class="form-control" name="bookname" id="bookname">
                         </div>
 
+                        <input type="hidden" name="id" id="bookid">
                         <div class="form-group">
                             <label>价格：</label>
                             <input type="text" class="form-control" name="bookprice" id="bookprice">
@@ -153,7 +154,7 @@
                             <label>书籍类型：</label>
                             <select name="typeid" class="form-control" id="typeid">
                                 <c:forEach items="${types}" var="type">
-                                    <option value="${type.id}">${type.booktype}</option>
+                                    <option value="${type.id}" ${type.id == 1 ? 'selected' : ''}>${type.booktype}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -255,33 +256,104 @@
             $("#newBookForm").submit();
         });
 
-        $("document").delegate("#editBtn","click", function () {
+        $(document).delegate("#editBtn","click", function () {
             var id = $(this).attr("rel");
+            console.log(id);
             $.get("/datatable/edit/"+id)
                     .done(function (data) {
-                        $("#bookname").val(data.id);
+                        $("#bookid").val(data.id);
+                        $("#bookname").val(data.bookname);
                         $("#bookprice").val(data.bookprice);
                         $("#bookauthor").val(data.bookauthor);
                         $("#booknum").val(data.booknum);
-                        $("#typeid").val(data.type.id);
+                        $("#typeid").val(data.typid);
                         $("#pubid").val(data.pubid);
+                        $("#editBookModel").modal({
+                            show:true,
+                            backdrop:false,
+                            keyboard:false
+                        });
                     })
                     .fail(function () {
                         alert("请求服务器错误");
                     });
         });
 
-        $("document").delegate("#delBtn","click", function () {
-            var id = $(this).val();
-            $.get("/del/"+id)
-                    .done(function (data) {
-                        if(data == "success"){
-                            $dataTable.ajax.reload();
-                        }
-                    })
-                    .fail(function () {
+//        JavaScript提交是表单提交而不是按钮提交
+        $("#editBookBtn").click(function () {
+            $("#editBookForm").submit();
+        });
 
-                    });
+
+//            修改时一定要把id传进来，传的值为隐藏
+//            validate提交助手，validate初始化时表单对象初始化为JavaScript的form对象
+
+        $("#editBookForm").validate({
+            errorElement:'span',
+            errorClass:'text-danger',
+            rules:{
+                bookname:{
+                    required:true
+                },
+                bookprice:{
+                    required:true,
+                    number:true
+                },
+                bookauthor:{
+                    required:true
+                },
+                booknum:{
+                    required:true,
+                    digits:true
+                },
+                typid:{
+                    required:true
+                },
+                pubid:{
+                    required:true
+                }
+            },
+            messages:{
+                bookname:{
+                    required:"请输入书籍名称"
+                },
+                bookprice:{
+                    required:"请输入价格"
+                },
+                bookauthor:{
+                    required:"请输入作者"
+                },
+                booknum:{
+                    required:"请输入数量"
+                }
+            },
+            submitHandler: function (form) {
+                $.post("/datatable/edit",$(form).serialize())
+                        .done(function (data) {
+                            if(data == "success"){
+                                $("#editBookModel").modal('hide');
+                                $dataTable.ajax.reload();
+                            }
+                        })
+                        .fail(function () {
+
+                        });
+            }
+        });
+
+        $(document).delegate("#delBtn","click", function () {
+            var id = $(this).val();
+            if(confirm("确定删除该书籍？")){
+                $.get("datatable/del/"+id)
+                        .done(function (data) {
+                            if(data == "success"){
+                                $dataTable.ajax.reload();
+                            }
+                        })
+                        .fail(function () {
+                            alert("请求服务器错误！");
+                        });
+            }
         });
 
         var $dataTable = $("#datatable").DataTable({
@@ -298,8 +370,8 @@
                 {"data":"publisher.pubname"},
                 {"data":"bookType.booktype","name":"typeid"},
                 {"data":function(row){
-                    return "<a href='javascript:;' id='editBtn' rel='"+"${book.id}"+"'>修改</a>"+
-                            "&nbsp;&nbsp;<a href='javascript:;' id='delBtn' rel='"+"${book.id}"+"'>删除</a>";
+                    return "<a href='javascript:;' id='editBtn' rel='"+row.id+"'>修改</a>"+
+                            "&nbsp;&nbsp;<a href='javascript:;' id='delBtn' rel='"+row.id+"'>删除</a>";
                 }}
             ],
             "columnDefs":[ //定义列的特征
@@ -322,8 +394,6 @@
                 },
             }
         });
-
-
 
     });
 </script>

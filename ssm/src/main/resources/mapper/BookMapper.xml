@@ -38,7 +38,11 @@
     </select>
 
     <select id="findById" resultType="Book">
-        select * from t_book WHERE id = #{id};
+        select
+         t_book.*,t_booktype.booktype AS 'booktype.booktype',t_publisher.pubname AS 'publisher.pubname',t_publisher.id AS 'publisher.id',t_booktype.id AS 'booktype.id' from t_book
+        INNER JOIN t_publisher ON t_book.pubid = t_publisher.id
+        INNER JOIN t_booktype ON t_book.typeid = t_booktype.id
+         WHERE t_book.id = #{id};
     </select>
 
     <select id="delById" >

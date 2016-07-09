@@ -77,4 +77,17 @@ public class DataTableController {
         return bookService.findById(id);
     }
 
+//    返回值时考虑返回的是什么类型的
+    @RequestMapping(value = "/edit",method = RequestMethod.POST)
+    @ResponseBody
+    public String editBook(Book book){
+        bookService.update(book);
+        return "success";
+    }
+
+    @RequestMapping(value = "/del/{id:\\d+}",method = RequestMethod.GET)
+    public String delBook(@PathVariable Integer id){
+        bookService.delById(id);
+        return "success";
+    }
 }
