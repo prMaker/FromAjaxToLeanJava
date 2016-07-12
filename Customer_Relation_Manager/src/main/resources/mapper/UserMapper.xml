@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishengit.mapper.UserMapper">
+
+    <cache/>
+    <insert id="save">
+        INSERT INTO t_user (username, password, realname, weixin,  roleid)
+         VALUES (#{username},#{password},#{realname},#{weixin},#{roleid})
+    </insert>
+    <update id="updateUser">
+        UPDATE t_user
+        <set>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="realname != null and realname != ''">
+                realname = #{realname},
+            </if>
+            <if test="weixin != null and weixin != ''">
+                weixin = #{weixin},
+            </if>
+            <if test="roleid != null and roleid != ''">
+                roleid = #{roleid},
+            </if>
+            enable = #{enable}
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findByUsername" resultType="User">
+        SELECT * FROM t_user WHERE username = #{username}
+    </select>
+    <select id="findUserByParam" resultType="com.kaishengit.pojo.User">
+        select t_user.*,t_role.id as 'role.id',t_role.rolename as 'role.rolename' from t_user
+        INNER JOIN t_role ON t_user.roleid = t_role.id
+        <where>
+            <if test="keyword != null and keyword != ''">
+                username LIKE concat('%',#{keyword},'%') or realname like concat('%',#{keyword},'%')
+            </if>
+        </where>
+         order by t_user.id desc
+         limit ${start},${length}
+    </select>
+    <select id="countUserTotal" resultType="java.lang.Long">
+        select count(*) from t_user;
+    </select>
+    <select id="countUserParam" resultType="java.lang.Long">
+        select count(*) from t_user
+        <where>
+            <if test="keyword != null and keyword != ''">
+                username LIKE concat('%',#{keyword},'%')
+                or realname like concat('%',#{keyword},'%')
+            </if>
+        </where>
+    </select>
+    <select id="findById" resultType="com.kaishengit.pojo.User">
+        select * from t_user
+        WHERE id=#{id};
+    </select>
+
+
+</mapper>

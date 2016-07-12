@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kaishengit.mapper.NoticeMapper">
+
+    <cache/>
+
+    <insert id="save">
+        INSERT INTO t_notice (title, context, realname, userid)
+        VALUES (#{title},#{context},#{realname},#{userid})
+    </insert>
+    <select id="findNoticeById" resultType="com.kaishengit.pojo.Notice">
+        select * from t_notice
+        WHERE id = #{id}
+    </select>
+    <select id="findNoticeByParam" resultType="com.kaishengit.pojo.Notice">
+        select * from t_notice
+        <where>
+            <if test="keyword != null and keyword != ''">
+                title LIKE concat('%',#{keyword},'%') or realname like concat('%',#{keyword},'%')
+            </if>
+        </where>
+        order by id desc
+        limit ${start},${length}
+    </select>
+    <select id="count" resultType="java.lang.Long">
+        select count(*) from t_notice
+    </select>
+    <select id="countByParam" resultType="java.lang.Long">
+        select count(*) from t_notice
+        <where>
+            <if test="keyword != null and keyword != ''">
+                title LIKE concat('%',#{keyword},'%') or realname like concat('%',#{keyword},'%')
+            </if>
+        </where>
+    </select>
+</mapper>
