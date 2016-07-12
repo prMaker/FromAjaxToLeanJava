@@ -11,6 +11,9 @@
     <!--基于注解的Controller-->
     <mvc:annotation-driven/>
 
+    <!--二次读取配置文件数据-->
+    <context:property-placeholder location="classpath:config.properties"/>
+
     <!--静态资源-->
     <mvc:resources mapping="/static/**" location="/static/">
         <mvc:cache-control max-age="3600" cache-public="true"/>

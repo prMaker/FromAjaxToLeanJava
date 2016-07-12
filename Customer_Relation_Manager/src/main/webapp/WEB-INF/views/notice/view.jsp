@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -8,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>凯盛CRM|新增公告</title>
+    <title>凯盛CRM|${notice.title}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -32,31 +33,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
+        <section class="content-header">
+            <h1>&nbsp;</h1>
+            <ol class="breadcrumb">
+                <li><a href="/notice"><i class="fa fa-dashboard"></i>公告列表</a></li>
+                <li class="active">${notice.title}</li>
+            </ol>
+        </section>
+
         <!-- Main content -->
         <section class="content">
 
             <div class="box box-primary">
 
                 <div class="box-header with-border">
-                    <h3 class="box-title">新建公告</h3>
+                    <h3 class="box-title">${notice.title}&nbsp;&nbsp;<small>${notice.realname}&nbsp;&nbsp;<fmt:formatDate value="${notice.createtime}" pattern="y-M-d H:m"/> </small> </h3>
                 </div>
 
                 <div class="box-body">
-
-                    <form method="post" id="newNoticeForm">
-                        <div class="form-group">
-                            <label>标题</label>
-                            <input type="text" class="form-control" id="title" name="title">
-                        </div>
-                        <div class="form-group">
-                            <label>正文</label>
-                            <textarea name="context" id="context" rows="10" class="form-control"></textarea>
-                        </div>
-                    </form>
-                </div>
-                
-                <div class="box-footer">
-                    <a href="javascript:;" id="submitBtn" class="btn btn-primary pull-right">保存</a>
+                    ${notice.context}
                 </div>
 
             </div>
@@ -84,27 +79,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script>
 
     $(function () {
-        var simpditor = new Simditor({
-            textarea:$("#context"),
-            placeholder:'请输入公告内容',
-            upload:{
-                url:'/notice/upload',
-                fileKey:'file'
-            }
-        });
-
-        $("#submitBtn").click(function () {
-            if(!$("#title").val()){
-                $("#title").focus();
-                return;
-            }
-            if(!$("#context").val()){
-                $("#context").focus();
-                return;
-            }
-            $("#newNoticeForm").submit();
-        });
-
     });
 
 </script>

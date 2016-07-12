@@ -3,6 +3,7 @@ package com.kaishengit.controller;
 import com.google.common.collect.Maps;
 import com.kaishengit.dto.DataTablesResult;
 import com.kaishengit.dto.FlashMessage;
+import com.kaishengit.dto.JSONResult;
 import com.kaishengit.pojo.Notice;
 import com.kaishengit.service.NoticeService;
 import com.sun.corba.se.spi.ior.ObjectKey;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +89,33 @@ public class NoticeController {
         }
 
         return new DataTablesResult<>(draw,noticeList,count,countByParam);
+    }
+
+    /**
+     * 公告内容显示页面
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/{id:\\d+}",method = RequestMethod.GET)
+    public String view(@PathVariable Integer id,Model model){
+        Notice notice = noticeService.findNoticeById(id);
+        model.addAttribute("notice",notice);
+        return "notice/view";
+    }
+
+    @RequestMapping(value = "/upload",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> upload(MultipartFile file) throws IOException {
+        Map<String,Object> param = Maps.newHashMap();
+        if(!file.isEmpty()){
+            String url = noticeService.saveFile(file.getInputStream(),file.getOriginalFilename());
+            param.put("success",true);
+            param.put("file_path",url);
+        }else{
+            param.put("success",false);
+            param.put("msg","保存图片异常");
+        }
+        return param;
     }
 
 }

@@ -103,7 +103,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             ordering:false,
             columns:[
                 {"data": function (row) {
-                    return "<a href='/notice/"+row.id+".json'>"+row.title+"</a>";
+                    return "<a href='/notice/"+row.id+"'>"+row.title+"</a>";
                 }},
                 {"data":"realname"},
                 {"data": function (row) {
