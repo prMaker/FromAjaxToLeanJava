@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.kaishengit.dto.DataTablesResult;
 import com.kaishengit.dto.FlashMessage;
 import com.kaishengit.dto.JSONResult;
+import com.kaishengit.exception.NotFoundException;
 import com.kaishengit.pojo.Notice;
 import com.kaishengit.service.NoticeService;
 import com.sun.corba.se.spi.ior.ObjectKey;
@@ -99,6 +100,9 @@ public class NoticeController {
     @RequestMapping(value = "/{id:\\d+}",method = RequestMethod.GET)
     public String view(@PathVariable Integer id,Model model){
         Notice notice = noticeService.findNoticeById(id);
+        if(notice == null){
+            throw new NotFoundException();
+        }
         model.addAttribute("notice",notice);
         return "notice/view";
     }
@@ -106,16 +110,16 @@ public class NoticeController {
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> upload(MultipartFile file) throws IOException {
-        Map<String,Object> param = Maps.newHashMap();
+        Map<String,Object> result = Maps.newHashMap();
         if(!file.isEmpty()){
             String url = noticeService.saveFile(file.getInputStream(),file.getOriginalFilename());
-            param.put("success",true);
-            param.put("file_path",url);
+            result.put("success",true);
+            result.put("file_path",url);
         }else{
-            param.put("success",false);
-            param.put("msg","保存图片异常");
+            result.put("success",false);
+            result.put("msg","请选择文件");
         }
-        return param;
+        return result;
     }
 
 }

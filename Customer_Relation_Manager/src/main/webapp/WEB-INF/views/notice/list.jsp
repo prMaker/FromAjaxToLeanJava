@@ -101,6 +101,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             serverSide:true,
             ajax:"/notice/load",
             ordering:false,
+            autoWidth:false,
             columns:[
                 {"data": function (row) {
                     return "<a href='/notice/"+row.id+"'>"+row.title+"</a>";
@@ -123,7 +124,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     "last":       "末页",
                     "next":       "下一页",
                     "previous":   "上一页"
-                },
+                }
             }
 
         });

@@ -23,9 +23,9 @@ public class PreviewController {
     public void preview(@PathVariable String fileName, HttpServletResponse response) throws IOException {
         File file = new File(filePath,fileName);
         FileInputStream fileInputStream = new FileInputStream(file);
-//        if(!file.exists()){
-//            throw new NotFoundException();
-//        }
+        if(!file.exists()){
+            throw new NotFoundException();
+        }
         OutputStream outputStream = response.getOutputStream();
 
         IOUtils.copy(fileInputStream,outputStream);
