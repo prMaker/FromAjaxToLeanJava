@@ -16,12 +16,11 @@
     <link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="/static/plugins/iCheck/square/blue.css">
+    <style>
+    </style>
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-image: url(/static/img/1.jpg);">
 <div class="login-box">
-    <div class="login-logo">
-        <a href="/"><b>KaiSheng</b>CRM</a>
-    </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
         <c:if test="${not empty message}">
@@ -46,6 +45,10 @@
 
         </c:if>
         <form action="/" method="post">
+
+            <div class="login-logo">
+                <a href="/"><b>KaiSheng</b>CRM</a>
+            </div>
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" autofocus name="username" placeholder="账号">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

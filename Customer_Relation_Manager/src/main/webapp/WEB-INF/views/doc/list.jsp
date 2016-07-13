@@ -38,11 +38,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <h1>
                 文档管理
             </h1>
-            <%--<ol class="breadcrumb">--%>
-                <%--<c:if test="${fid != 0}">--%>
-                    <%--<li><a id="upperStory" href="javascript:;"><i class="fa fa-dashboard"></i>返回上一层</a></li>--%>
-                <%--</c:if>--%>
-            <%--</ol>--%>
+            <ol class="breadcrumb">
+                <c:if test="${fid != 0}">
+                    <li><a id="upperStory" href="/doc/upper/${fid}"><i class="fa fa-dashboard"></i>返回上一层</a></li>
+                </c:if>
+            </ol>
         </section>
 
 

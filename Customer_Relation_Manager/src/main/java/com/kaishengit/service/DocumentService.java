@@ -83,6 +83,7 @@ public class DocumentService {
         document.setSize(FileUtils.byteCountToDisplaySize(size));
         document.setName(name);
 //        document.setMd5(md5);
+//        TODO md5的计算与inputstream的reset
         document.setContenttype(contentType);
         documentMapper.save(document);
 
@@ -91,5 +92,9 @@ public class DocumentService {
 
     public Document findDocumentById(Integer id) {
         return documentMapper.findDocumentById(id);
+    }
+
+    public Integer findFidByid(Integer id) {
+        return documentMapper.findDocumentById(id).getFid();
     }
 }

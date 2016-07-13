@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class DocumentController {
      * @return
      */
     @RequestMapping(value = "/dir/new",method = RequestMethod.POST)
-    public String createDir(Integer fid,String folderName){
+    public String createDir(Integer fid, String folderName, HttpServletResponse response){
         documentService.createNewDir(fid,folderName);
         return "redirect:/doc?fid="+fid;
     }
@@ -61,7 +62,7 @@ public class DocumentController {
      * @return
      */
     @RequestMapping(value = "/download/{id:\\d+}")
-    public ResponseEntity<InputStreamResource> docDown(@PathVariable Integer id) throws FileNotFoundException {
+    public ResponseEntity<InputStreamResource> docDown(@PathVariable Integer id) throws FileNotFoundException, UnsupportedEncodingException {
         Document document = documentService.findDocumentById(id);
         if(document == null){
             throw new NotFoundException();
@@ -72,6 +73,7 @@ public class DocumentController {
         }
         FileInputStream fileInputStream = new FileInputStream(file);
         String fileName = document.getFilename();
+        fileName = new String(fileName.getBytes("UTF-8"),"ISO8859-1");
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.parseMediaType(document.getContenttype()))
@@ -90,7 +92,9 @@ public class DocumentController {
     @RequestMapping(value = "/file/upload",method = RequestMethod.POST)
     @ResponseBody
     public String fileUpload(MultipartFile file, Integer fid) throws IOException {
-
+        if(file.isEmpty()){
+            throw new NotFoundException();
+        }
         String fileName = file.getOriginalFilename();
         InputStream inputStream = file.getInputStream();
         Long size = file.getSize();
@@ -99,7 +103,13 @@ public class DocumentController {
         return "success";
     }
 
-
-
+    @RequestMapping(value = "/upper/{fid:\\d+}",method = RequestMethod.GET)
+    public String upperStory(@PathVariable Integer fid){
+        fid =documentService.findFidByid(fid);
+        if(fid<0){
+            throw new NotFoundException();
+        }
+        return "redirect:/doc?fid="+fid;
+    }
 
 }
