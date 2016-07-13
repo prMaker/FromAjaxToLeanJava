@@ -126,9 +126,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     "previous":   "上一页"
                 }
             }
-
         });
-
     });
 
 </script>

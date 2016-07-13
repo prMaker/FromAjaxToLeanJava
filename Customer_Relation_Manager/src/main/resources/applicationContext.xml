@@ -23,6 +23,7 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
+
     <!--基于JDBC事务-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>

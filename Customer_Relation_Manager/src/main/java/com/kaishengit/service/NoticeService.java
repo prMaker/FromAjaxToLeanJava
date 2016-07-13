@@ -49,8 +49,8 @@ public class NoticeService {
     }
 
     public String saveFile(InputStream inputStream, String originalFilename) throws IOException {
-//        String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
-        String fileName = UUID.randomUUID().toString();
+        String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+        String fileName = UUID.randomUUID().toString()+suffix;
         File file = new File(filePath,fileName);
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         IOUtils.copy(inputStream,fileOutputStream);

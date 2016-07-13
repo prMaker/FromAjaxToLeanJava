@@ -7,6 +7,7 @@ com\kaishengit\controller\DataTableController.class
 com\kaishengit\service\BookService.class
 com\kaishengit\exception\DataNotFoundException.class
 com\kaishengit\controller\BookController.class
+com\kaishengit\controller\WebUploadController.class
 com\kaishengit\mapper\PublisherMapper.class
 com\kaishengit\util\Strings.class
 com\kaishengit\pojo\Book.class

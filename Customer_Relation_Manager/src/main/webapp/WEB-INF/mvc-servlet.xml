@@ -9,7 +9,13 @@
     <context:component-scan base-package="com.kaishengit.controller"/>
 
     <!--基于注解的Controller-->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <!--使后缀可以使用.-->
+        <!--
+            @RequestMapping("{id:.+}")
+        -->
+        <mvc:path-matching registered-suffixes-only="true"/>
+    </mvc:annotation-driven>
 
     <!--二次读取配置文件数据-->
     <context:property-placeholder location="classpath:config.properties"/>
