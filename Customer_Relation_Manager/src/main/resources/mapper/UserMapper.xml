@@ -30,7 +30,9 @@
     </update>
 
     <select id="findByUsername" resultType="User">
-        SELECT * FROM t_user WHERE username = #{username}
+        SELECT t_user.*,t_role.id AS 'role.id',t_role.rolename AS 'role.rolename' FROM t_user
+        INNER JOIN t_role ON t_user.roleid = t_role.id
+        WHERE username = #{username}
     </select>
     <select id="findUserByParam" resultType="com.kaishengit.pojo.User">
         select t_user.*,t_role.id as 'role.id',t_role.rolename as 'role.rolename' from t_user

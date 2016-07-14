@@ -39,6 +39,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 文档管理
             </h1>
             <ol class="breadcrumb">
+
+                <c:forEach items="${fidList}" var="fid">
+                    <li><a href="/doc/upper/${fid}"><i class="fa fa-dashboard"></i>返回上一层</a></li>
+                </c:forEach>
+
                 <c:if test="${fid != 0}">
                     <li><a id="upperStory" href="/doc/upper/${fid}"><i class="fa fa-dashboard"></i>返回上一层</a></li>
                 </c:if>

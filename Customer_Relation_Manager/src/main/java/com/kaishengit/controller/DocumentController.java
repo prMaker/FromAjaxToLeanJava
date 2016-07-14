@@ -38,10 +38,11 @@ public class DocumentController {
     @RequestMapping(method = RequestMethod.GET)
     public String doc(Model model,
                       @RequestParam(required = false,defaultValue = "0") Integer fid){
-
+        List<Document> fidList = documentService.getFidList(fid);
         List<Document> documentList = documentService.findDocumentByFid(fid);
         model.addAttribute("fid",fid);
         model.addAttribute("documentList",documentList);
+        model.addAttribute("fidList",fidList);
         return "doc/list";
     }
 

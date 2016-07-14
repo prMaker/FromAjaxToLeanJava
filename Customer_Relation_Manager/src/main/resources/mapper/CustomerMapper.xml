@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kaishengit.mapper.CustomerMapper">
+    <insert id="save">
+        INSERT INTO t_customer (userid, name, pinyin, tel, weixin, email,
+        address,companyid, companyname, level, type)
+        VALUES (#{userid},#{name},#{pinyin},#{tel},#{weixin},#{email},
+        #{address},#{companyid},#{companyname},#{level},#{type})
+    </insert>
+
+    <update id="update">
+        UPDATE t_customer SET userid=#{userid},name=#{name},pinyin=#{pinyin},tel=#{tel},
+        weixin=#{weixin},email=#{email},address=#{address},companyid=#{companyid},
+        companyname=#{companyname},level=#{level},type=#{type}
+        where id=#{id}
+    </update>
+
+    <delete id="del">
+        DELETE FROM t_customer WHERE id=#{id}
+    </delete>
+
+
+    <select id="findByParam" resultType="com.kaishengit.pojo.Customer">
+        select * from t_customer
+        <where>
+            (userid = #{userid} or userid = null or userid = '')
+            <if test="keyword != null and keyword != ''">
+                AND pinyin LIKE concat('%',#{keyword},'%')
+                or tel like concat('%',#{keyword},'%')
+                or level like concat('%',#{keyword},'%')
+            </if>
+        </where>
+        order by id
+        limit ${start},${length}
+    </select>
+
+    <select id="countAllByParam" resultType="java.lang.Long">
+        select count(1) from t_customer
+        <where>
+            userid = #{userid}
+        </where>
+    </select>
+
+    <select id="countByParam" resultType="java.lang.Long">
+        select count(1) from t_customer
+        <where>
+            (userid = #{userid} or userid = null or userid = '')
+            <if test="keyword != null and keyword != ''">
+                AND pinyin LIKE concat('%',#{keyword},'%')
+                or tel like concat('%',#{keyword},'%')
+                or level like concat('%',#{keyword},'%')
+            </if>
+        </where>
+        order by id
+        limit ${start},${length}
+    </select>
+
+    <select id="findByType" resultType="com.kaishengit.pojo.Customer">
+        select * from t_customer
+        WHERE type = #{company}
+    </select>
+    <select id="findById" resultType="com.kaishengit.pojo.Customer">
+        select * from t_customer
+        WHERE id = #{companyid}
+    </select>
+    <select id="findAllCustomerByParam" resultType="com.kaishengit.pojo.Customer">
+        select * from t_customer
+        <where>
+            <if test="keyword != null and keyword != ''">
+                pinyin LIKE concat('%',#{keyword},'%')
+                or tel like concat('%',#{keyword},'%')
+                or level like concat('%',#{keyword},'%')
+            </if>
+        </where>
+        order by id
+        limit ${start},${length}
+    </select>
+    <select id="countAll" resultType="java.lang.Long">
+        select count(1) from t_customer;
+    </select>
+    <select id="countByDirectorParam" resultType="java.lang.Long">
+        select count(1) from t_customer
+        <where>
+            <if test="keyword != null and keyword != ''">
+                pinyin LIKE concat('%',#{keyword},'%')
+                or tel like concat('%',#{keyword},'%')
+                or level like concat('%',#{keyword},'%')
+            </if>
+        </where>
+    </select>
+    <select id="findAllByCompanyId" resultType="com.kaishengit.pojo.Customer">
+        select * from t_customer
+        WHERE companyid = #{id}
+    </select>
+
+</mapper>

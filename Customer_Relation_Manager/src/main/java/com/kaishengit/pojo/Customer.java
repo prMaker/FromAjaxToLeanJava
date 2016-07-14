@@ -9,6 +9,10 @@ import java.sql.Timestamp;
 public class Customer implements Serializable{
 
     private static final long serialVersionUID = 8079486369524898977L;
+
+    public static final String TYPE_PERSON = "person";
+    public static final String TYPE_COMPANY = "company";
+
     private Integer id;
     private Integer userid;
     private String name;
@@ -21,6 +25,34 @@ public class Customer implements Serializable{
     private String companyname;
     private Timestamp createtime;
     private String level;
+    private String type;
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", userid=" + userid +
+                ", name='" + name + '\'' +
+                ", pinyin='" + pinyin + '\'' +
+                ", tel='" + tel + '\'' +
+                ", weixin='" + weixin + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", companyid=" + companyid +
+                ", companyname='" + companyname + '\'' +
+                ", createtime=" + createtime +
+                ", level='" + level + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Integer getId() {
         return id;
@@ -118,21 +150,4 @@ public class Customer implements Serializable{
         this.level = level;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", userid=" + userid +
-                ", name='" + name + '\'' +
-                ", pinyin='" + pinyin + '\'' +
-                ", tel='" + tel + '\'' +
-                ", weixin='" + weixin + '\'' +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
-                ", companyid=" + companyid +
-                ", companyname='" + companyname + '\'' +
-                ", createtime=" + createtime +
-                ", level='" + level + '\'' +
-                '}';
-    }
 }
