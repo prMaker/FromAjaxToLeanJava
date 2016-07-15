@@ -1,5 +1,6 @@
 package com.kaishengit.service;
 
+import com.google.common.collect.Maps;
 import com.google.zxing.EncodeHintType;
 import com.kaishengit.exception.ForbiddenException;
 import com.kaishengit.exception.NotFoundException;
@@ -28,6 +29,11 @@ public class CustomerService {
     @Inject
     private UserMapper userMapper;
 
+    /**
+     * 根据参数获取所有客户列表
+     * @param param
+     * @return
+     */
     public List<Customer> findCustomerByParam(Map<String, Object> param) {
         if(ShiroUtil.getCurrentUserType().equals("经理")){
             return customerMapper.findAllCustomerByParam(param);
@@ -35,6 +41,11 @@ public class CustomerService {
         return customerMapper.findByParam(param);
     }
 
+    /**
+     * 该用户所有客户数量
+     * @param param
+     * @return
+     */
     public Long countAllByParam(Map<String,Object> param) {
         if(ShiroUtil.getCurrentUserType().equals("经理")){
             return customerMapper.countAll();
@@ -42,6 +53,11 @@ public class CustomerService {
         return customerMapper.countAllByParam(param);
     }
 
+    /**
+     * 该客户筛选出来的客户数量
+     * @param param
+     * @return
+     */
     public Long countByParam(Map<String, Object> param) {
         if(ShiroUtil.getCurrentUserType().equals("经理")){
             return customerMapper.countByDirectorParam(param);
@@ -49,10 +65,18 @@ public class CustomerService {
         return customerMapper.countByParam(param);
     }
 
+    /**
+     * 查询出所有公司
+     * @return
+     */
     public List<Customer> findAllCompany() {
         return customerMapper.findByType(Customer.TYPE_COMPANY);
     }
 
+    /**
+     * 保存新客户
+     * @param customer
+     */
     @Transactional
     public void save(Customer customer) {
         if(customer.getCompanyid() != null){
@@ -63,6 +87,10 @@ public class CustomerService {
         customerMapper.save(customer);
     }
 
+    /**
+     * 删除客户
+     * @param id
+     */
     @Transactional
     public void del(Integer id) {
         Customer customer = customerMapper.findById(id);
@@ -80,10 +108,25 @@ public class CustomerService {
         customerMapper.del(id);
     }
 
+    /**
+     * 根据id查找客户
+     * @param id
+     * @return
+     */
     public Customer findById(Integer id) {
-        return customerMapper.findById(id);
+        Customer customer = customerMapper.findById(id);
+//        TODO 思考一下一段是否添加
+//        if(ShiroUtil.getCurrentUserID() != customer.getUserid()
+//                && !ShiroUtil.isManager()){
+//            throw new NotFoundException();
+//        }
+        return customer;
     }
 
+    /**
+     * 更新客户
+     * @param customer
+     */
     @Transactional
     public void update(Customer customer) {
         customer.setPinyin(PinYin.toPinYin(customer.getName()));
@@ -93,6 +136,10 @@ public class CustomerService {
         customerMapper.update(customer);
     }
 
+    /**
+     * 公开客户
+     * @param id
+     */
     @Transactional
     public void openCustomer(Integer id) {
         Customer customer = customerMapper.findById(id);
@@ -106,6 +153,11 @@ public class CustomerService {
         customerMapper.update(customer);
     }
 
+    /**
+     * 转移客户
+     * @param id
+     * @param userid
+     */
     @Transactional
     public void moveCustomer(Integer id, Integer userid) {
         Customer customer = customerMapper.findById(id);
@@ -124,14 +176,28 @@ public class CustomerService {
         customerMapper.update(customer);
     }
 
+    /**
+     * 查找所有员工
+     * @return
+     */
     public List<User> findAllUser() {
         return userMapper.findAllUser();
     }
 
+    /**
+     * 根据公司id查找公司员工
+     * @param id
+     * @return
+     */
     public List<Customer> findAllCustomerByCompanyId(Integer id) {
         return customerMapper.findAllByCompanyId(id);
     }
 
+    /**
+     * 制作mecard
+     * @param id
+     * @return
+     */
     public StringBuilder makeMecard(Integer id){
 //        Hashtable hints = new Hashtable();
 //        hints.put(EncodeHintType.CHARACTER_SET,"UTF-8");

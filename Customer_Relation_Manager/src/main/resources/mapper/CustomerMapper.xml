@@ -65,7 +65,7 @@
     </select>
     <select id="findById" resultType="com.kaishengit.pojo.Customer">
         select * from t_customer
-        WHERE id = #{companyid}
+        WHERE id = #{id}
     </select>
     <select id="findAllCustomerByParam" resultType="com.kaishengit.pojo.Customer">
         select * from t_customer

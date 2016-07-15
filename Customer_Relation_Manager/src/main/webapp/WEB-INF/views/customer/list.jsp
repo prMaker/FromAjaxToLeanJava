@@ -409,7 +409,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         return row.type ==
                         "person" && row.companyname != null
                                 ? "<a href='/customer/"+ row.id +"'>" + row.name+"</a>  "
-                        +"-"+"  <a href='/customer/"+ row.id +"'>" + row.companyname +"</a>"
+                        +"-"+"  <a href='/customer/"+ row.companyid +"'>" + row.companyname +"</a>"
                                 : "<a href='/customer/"+ row.id +"'>" + row.name+"</a>"
                 }},
                 {"data":"tel"},

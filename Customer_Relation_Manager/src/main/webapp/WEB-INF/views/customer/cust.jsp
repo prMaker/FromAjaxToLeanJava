@@ -125,7 +125,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                              <h2 class="box-title"><i class="fa fa-qrcode"></i> 二维码显示客户信息</h2>
                          </div>
                          <div class="box-body" style="text-align: center">
-                             <img src="/customer/qrcode/${customer.id}" alt="">
+                             <img src="/customer/qrcode/${customer.id}.png" alt="">
                          </div>
                     </div>
 
@@ -224,7 +224,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             submitHandler: function (form) {
                 $.post("/customer/move",{"id":$("#id").val(),"userid":$("#userid").val()}).done(function (data) {
                     if(data == "success"){
-                        window.localtion.href="/customer";
+                        window.location.href="/customer";
                     }
                 }).fail(function () {
                     alert("请求服务器错误");

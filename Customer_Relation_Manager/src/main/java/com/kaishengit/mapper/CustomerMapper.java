@@ -20,7 +20,7 @@ public interface CustomerMapper {
 
     void save(Customer customer);
 
-    Customer findById(Integer companyid);
+    Customer findById(Integer id);
 
     List<Customer> findAllCustomerByParam(Map<String, Object> param);
 

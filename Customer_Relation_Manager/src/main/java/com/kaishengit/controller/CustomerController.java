@@ -165,7 +165,7 @@ public class CustomerController {
     /**
      * 获取客户二维码资料
      */
-    @RequestMapping(value = "/qrcode/{id:\\d+}",method = RequestMethod.GET)
+    @RequestMapping(value = "/qrcode/{id:\\d+}.png",method = RequestMethod.GET)
     public void getQrCode(@PathVariable Integer id, HttpServletResponse response) throws WriterException, IOException {
         String mecard = customerService.makeMecard(id).toString();
 

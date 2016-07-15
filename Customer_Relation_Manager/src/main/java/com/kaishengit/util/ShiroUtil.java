@@ -36,6 +36,6 @@ public class ShiroUtil {
     }
 
     public static Boolean isManager(){
-        return getCurrentUserRealname().equals(Role.ROLENAME_MANAGER);
+        return getCurrentUser().getRole().getRolename().equals(Role.ROLENAME_MANAGER);
     }
 }
