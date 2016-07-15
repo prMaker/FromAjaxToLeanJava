@@ -1,6 +1,8 @@
 package com.kaishengit.util;
 
+import com.kaishengit.pojo.Role;
 import com.kaishengit.pojo.User;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.shiro.SecurityUtils;
 
 public class ShiroUtil {
@@ -27,5 +29,13 @@ public class ShiroUtil {
 
     public static String getCurrentUserType() {
         return getCurrentUser().getRole().getRolename();
+    }
+
+    public static Boolean isEmployee(){
+        return getCurrentUserRealname().equals(Role.ROLENAME_EMPLOYEE);
+    }
+
+    public static Boolean isManager(){
+        return getCurrentUserRealname().equals(Role.ROLENAME_MANAGER);
     }
 }

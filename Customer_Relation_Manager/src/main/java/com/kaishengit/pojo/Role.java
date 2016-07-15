@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Role implements Serializable {
 
+    public static final String ROLENAME_ADMIN = "管理员";
+    public static final String ROLENAME_EMPLOYEE="员工";
+    public static final String ROLENAME_MANAGER="经理";
+
     private Integer id;
     private String rolename;
 

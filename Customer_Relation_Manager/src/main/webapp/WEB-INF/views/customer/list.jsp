@@ -39,7 +39,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="box box-primary">
 
                 <div class="box-header with-border">
-                    <h3 class="box-title">客户列表</h3>
+                    <h2 class="box-title">客户列表</h2>
                     <a href="javascript:;" id="newCustomerBtn" class="btn btn-success btn-xs pull-right"><i class="fa fa-play-circle"></i>添加客户</a>
 
                     <%--<shiro:hasRole name="经理" >--%>
@@ -53,12 +53,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                         <thead>
                             <tr>
-                                <th>类型</th>
-                                <th>客户姓名</th>
-                                <th>电话</th>
-                                <th>地址</th>
-                                <th>等级</th>
-                                <th>#</th>
+                                <th class="col-xs-1">类型</th>
+                                <th class="col-xs-3">客户姓名</th>
+                                <th class="col-xs-2">电话</th>
+                                <th class="col-xs-3">地址</th>
+                                <th class="col-xs-1">等级</th>
+                                <th class="col-xs-1">#</th>
                             </tr>
                         </thead>
 
@@ -234,7 +234,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 //      新建客户表单提交
         $("#newCustomerBtn").click(function () {
 //        Ajax获取公司数据数据
-            $.get("/customer/companyList/load").done(function (data) {
+            $.get("/customer/companyList/load.json").done(function (data) {
                 if(data.state == "success"){
                     $("#companyshow select").html("");
                     $("#companyshow select").append("<option></option>");
@@ -323,7 +323,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 //        modal框的显示
         $(document).delegate(".edit","click", function () {
             var id = $(this).attr("rel");
-            $.get("/customer/edit/load/"+id).done(function (data) {
+            $.get("/customer/edit/load/"+id+".json").done(function (data) {
                 if(data.state == "success"){
                     $("#edit_companyshow select").html("");
                     $("#edit_companyshow select").append("<option></option>");
@@ -406,7 +406,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     return row.type == "company" ? "<i class='fa fa-bank'></i>" : "<i class='fa fa-user'></i>"
                 }},
                 {"data": function (row) {
-                        return row.type == "person" && row.companyname != null ? row.name+"-"+row.companyname : row.name
+                        return row.type ==
+                        "person" && row.companyname != null
+                                ? "<a href='/customer/"+ row.id +"'>" + row.name+"</a>  "
+                        +"-"+"  <a href='/customer/"+ row.id +"'>" + row.companyname +"</a>"
+                                : "<a href='/customer/"+ row.id +"'>" + row.name+"</a>"
                 }},
                 {"data":"tel"},
                 {"data":"address"},

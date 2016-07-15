@@ -1,13 +1,19 @@
 package com.kaishengit.service;
 
+import com.google.zxing.EncodeHintType;
+import com.kaishengit.exception.ForbiddenException;
+import com.kaishengit.exception.NotFoundException;
 import com.kaishengit.mapper.CustomerMapper;
+import com.kaishengit.mapper.UserMapper;
 import com.kaishengit.pojo.Customer;
+import com.kaishengit.pojo.User;
 import com.kaishengit.util.PinYin;
 import com.kaishengit.util.ShiroUtil;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +25,8 @@ public class CustomerService {
 
     @Inject
     private CustomerMapper customerMapper;
+    @Inject
+    private UserMapper userMapper;
 
     public List<Customer> findCustomerByParam(Map<String, Object> param) {
         if(ShiroUtil.getCurrentUserType().equals("经理")){
@@ -83,5 +91,73 @@ public class CustomerService {
             customer.setCompanyname(customerMapper.findById(customer.getCompanyid()).getName());
         }
         customerMapper.update(customer);
+    }
+
+    @Transactional
+    public void openCustomer(Integer id) {
+        Customer customer = customerMapper.findById(id);
+//        if(!ShiroUtil.getCurrentUserID().equals(customer.getUserid())
+//        && customer.getUserid() != null
+        if(ShiroUtil.getCurrentUserID() != customer.getUserid()
+                && !ShiroUtil.isManager()){
+            throw new NotFoundException();
+        }
+        customer.setUserid(null);
+        customerMapper.update(customer);
+    }
+
+    @Transactional
+    public void moveCustomer(Integer id, Integer userid) {
+        Customer customer = customerMapper.findById(id);
+
+        if(customer == null){
+            throw new NotFoundException();
+        }
+
+//        if(customer.getUserid() == null&&
+//                !ShiroUtil.getCurrentUserID().equals(customer.getUserid())
+        if(customer.getUserid() != ShiroUtil.getCurrentUserID()
+                && !ShiroUtil.isManager()){
+            throw new ForbiddenException();
+        }
+        customer.setUserid(userid);
+        customerMapper.update(customer);
+    }
+
+    public List<User> findAllUser() {
+        return userMapper.findAllUser();
+    }
+
+    public List<Customer> findAllCustomerByCompanyId(Integer id) {
+        return customerMapper.findAllByCompanyId(id);
+    }
+
+    public StringBuilder makeMecard(Integer id){
+//        Hashtable hints = new Hashtable();
+//        hints.put(EncodeHintType.CHARACTER_SET,"UTF-8");
+
+        StringBuilder mecard = new StringBuilder();
+        Customer customer = customerMapper.findById(id);
+        if(customer != null){
+
+            mecard.append("MECARD:N:");
+            mecard.append(customer.getName());
+            if(customer.getCompanyid() != null){
+                mecard.append(";ORG:");
+                mecard.append(customer.getCompanyname());
+            }
+            mecard.append(";TEL:");
+            mecard.append(customer.getTel());
+            if(customer.getEmail() != null) {
+                mecard.append(";EMAIL:");
+                mecard.append(customer.getEmail());
+            }
+            if(customer.getAddress() != null) {
+                mecard.append(";ADR:");
+                mecard.append(customer.getAddress());
+            }
+        }
+
+        return mecard;
     }
 }

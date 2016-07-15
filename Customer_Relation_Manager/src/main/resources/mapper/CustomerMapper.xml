@@ -23,11 +23,13 @@
     <select id="findByParam" resultType="com.kaishengit.pojo.Customer">
         select * from t_customer
         <where>
-            (userid = #{userid} or userid = null or userid = '')
+            <if test="userid != null and userid != ''">
+              userid = #{userid} or userid is null or userid = ''
+            </if>
             <if test="keyword != null and keyword != ''">
-                AND pinyin LIKE concat('%',#{keyword},'%')
+                AND (pinyin LIKE concat('%',#{keyword},'%')
                 or tel like concat('%',#{keyword},'%')
-                or level like concat('%',#{keyword},'%')
+                or level like concat('%',#{keyword},'%'))
             </if>
         </where>
         order by id
@@ -44,7 +46,9 @@
     <select id="countByParam" resultType="java.lang.Long">
         select count(1) from t_customer
         <where>
-            (userid = #{userid} or userid = null or userid = '')
+            <if test="userid != null and userid != ''">
+                userid = #{userid} or userid is null or userid = ''
+            </if>
             <if test="keyword != null and keyword != ''">
                 AND pinyin LIKE concat('%',#{keyword},'%')
                 or tel like concat('%',#{keyword},'%')

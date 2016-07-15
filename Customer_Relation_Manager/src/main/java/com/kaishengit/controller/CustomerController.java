@@ -1,10 +1,17 @@
 package com.kaishengit.controller;
 
 import com.google.common.collect.Maps;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import com.kaishengit.dto.DataTablesResult;
 import com.kaishengit.dto.JSONResult;
 import com.kaishengit.exception.NotFoundException;
 import com.kaishengit.pojo.Customer;
+import com.kaishengit.pojo.User;
 import com.kaishengit.service.CustomerService;
 import com.kaishengit.util.ShiroUtil;
 import org.springframework.stereotype.Controller;
@@ -16,6 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -92,7 +103,7 @@ public class CustomerController {
     /**
      * Ajax获取公司列表
      */
-    @RequestMapping(value = "/companyList/load",method = RequestMethod.GET)
+    @RequestMapping(value = "/companyList/load.json",method = RequestMethod.GET)
     @ResponseBody
     public JSONResult companyList(){
         List<Customer> customerList = customerService.findAllCompany();
@@ -103,7 +114,7 @@ public class CustomerController {
     /**
      * 修改客户前资料上传
      */
-    @RequestMapping(value = "/edit/load/{id:\\d+}",method = RequestMethod.GET)
+    @RequestMapping(value = "/edit/load/{id:\\d+}.json",method = RequestMethod.GET)
     @ResponseBody
     public JSONResult editDataLoad(@PathVariable Integer id){
         List<Customer> customerList = customerService.findAllCompany();
@@ -130,6 +141,69 @@ public class CustomerController {
         return "success";
     }
 
+    /**
+     * 到达客户资料界面，查找所有员工，及该客户资料
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("/{id:\\d+}")
+    public String customer(@PathVariable Integer id,Model model){
+        List<User> userList = customerService.findAllUser();
+        Customer customer = customerService.findById(id);
+        if(customer == null){
+            return "error/403";
+        }
+
+        List<Customer> customerList = customerService.findAllCustomerByCompanyId(customer.getId());
+        model.addAttribute("customer",customer);
+        model.addAttribute("userList",userList);
+        model.addAttribute("customerList",customerList);
+        return "customer/cust";
+    }
+
+    /**
+     * 获取客户二维码资料
+     */
+    @RequestMapping(value = "/qrcode/{id:\\d+}",method = RequestMethod.GET)
+    public void getQrCode(@PathVariable Integer id, HttpServletResponse response) throws WriterException, IOException {
+        String mecard = customerService.makeMecard(id).toString();
+
+        Hashtable hints = new Hashtable();
+        hints.put(EncodeHintType.CHARACTER_SET,"UTF-8");
+
+        BitMatrix bitMatrix = new MultiFormatWriter().encode(mecard,BarcodeFormat.QR_CODE,300,300);
+        OutputStream outputStream = response.getOutputStream();
+
+        MatrixToImageWriter.writeToStream(bitMatrix,"png",outputStream);
+        outputStream.flush();
+        outputStream.close();
+    }
+
+    /**
+     * 公开客户
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/open/{id:\\d+}",method = RequestMethod.GET)
+    @ResponseBody
+    public String openCustomer(@PathVariable Integer id){
+        customerService.openCustomer(id);
+        return "success";
+    }
+
+    /**
+     * POST转移客户
+     * @param id
+     * @param userid
+     * @return
+     */
+    @RequestMapping(value = "/move",method = RequestMethod.POST)
+    @ResponseBody
+    public String moveCustomer(Integer id,Integer userid){
+        customerService.moveCustomer(id,userid);
+        return "success";
+    }
 
 
 
