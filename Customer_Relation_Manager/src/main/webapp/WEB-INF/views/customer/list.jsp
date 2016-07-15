@@ -156,12 +156,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <form id="editCustomerForm" method="post">
                     <input type="hidden" id="edit_id" name="id">
                     <input type="hidden" id="edit_userid" name="userid">
-                    <div class="form-group">
-                        <span>个人</span>
-                        <input type="radio" checked name="type" value="person" id="edit_person"/>
-                        <span>公司</span>
-                        <input type="radio" name="type" value="company" id="edit_company"/>
-                    </div>
+                    <input type="hidden" id="edit_type" name="type">
+
 
                     <div class="form-group">
                         <label>客户名</label>
@@ -338,6 +334,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     }else{
                         $("#edit_companyshow").hide();
                     }
+                    $("#edit_type").val(customer.type);
                     $("#edit_id").val(customer.id);
                     $("#edit_userid").val(customer.userid);
                     $("#edit_name").val(customer.name);
