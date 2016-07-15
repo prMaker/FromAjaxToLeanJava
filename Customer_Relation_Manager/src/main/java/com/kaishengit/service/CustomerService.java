@@ -115,11 +115,6 @@ public class CustomerService {
      */
     public Customer findById(Integer id) {
         Customer customer = customerMapper.findById(id);
-//        TODO 思考一下一段是否添加
-//        if(ShiroUtil.getCurrentUserID() != customer.getUserid()
-//                && !ShiroUtil.isManager()){
-//            throw new NotFoundException();
-//        }
         return customer;
     }
 
@@ -129,6 +124,7 @@ public class CustomerService {
      */
     @Transactional
     public void update(Customer customer) {
+
         customer.setPinyin(PinYin.toPinYin(customer.getName()));
         if(customer.getCompanyid() != null){
             customer.setCompanyname(customerMapper.findById(customer.getCompanyid()).getName());
@@ -143,11 +139,14 @@ public class CustomerService {
     @Transactional
     public void openCustomer(Integer id) {
         Customer customer = customerMapper.findById(id);
+        if(customer == null){
+            throw new NotFoundException();
+        }
 //        if(!ShiroUtil.getCurrentUserID().equals(customer.getUserid())
 //        && customer.getUserid() != null
         if(ShiroUtil.getCurrentUserID() != customer.getUserid()
                 && !ShiroUtil.isManager()){
-            throw new NotFoundException();
+            throw new ForbiddenException();
         }
         customer.setUserid(null);
         customerMapper.update(customer);

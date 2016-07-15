@@ -120,7 +120,7 @@ public class CustomerController {
         List<Customer> customerList = customerService.findAllCompany();
         Customer customer = customerService.findById(id);
         if(customer == null){
-            throw new NotFoundException();
+            return new JSONResult(JSONResult.ERROR,"没有找到该客户");
         }
 
         Map<String,Object> result = Maps.newHashMap();
@@ -154,11 +154,16 @@ public class CustomerController {
         if(customer == null){
             return "error/403";
         }
-
-        List<Customer> customerList = customerService.findAllCustomerByCompanyId(customer.getId());
+        if(ShiroUtil.getCurrentUserID() != customer.getUserid()
+                && !ShiroUtil.isManager()){
+            throw new NotFoundException();
+        }
+        if(customer.getType().equals(Customer.TYPE_COMPANY)){
+            List<Customer> customerList = customerService.findAllCustomerByCompanyId(customer.getId());
+            model.addAttribute("customerList",customerList);
+        }
         model.addAttribute("customer",customer);
         model.addAttribute("userList",userList);
-        model.addAttribute("customerList",customerList);
         return "customer/cust";
     }
 
