@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kaishengit.mapper.SalesLogMapper">
+
+    <insert id="save">
+        insert into t_sales_log (salesid, type, context)
+        values (#{salesid},#{type},#{context});
+    </insert>
+    <delete id="delBySalesId">
+        DELETE FROM t_sales_log
+        WHERE salesid=#{id}
+    </delete>
+    <select id="findBySalesid" resultType="com.kaishengit.pojo.SalesLog">
+        select * FROM t_sales_log WHERE salesid = #{saleId}
+        order by id desc
+    </select>
+
+</mapper>

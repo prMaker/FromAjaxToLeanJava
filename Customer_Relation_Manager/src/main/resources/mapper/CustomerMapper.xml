@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kaishengit.mapper.CustomerMapper">
+
+    <cache/>
+
     <insert id="save">
         INSERT INTO t_customer (userid, name, pinyin, tel, weixin, email,
         address,companyid, companyname, level, type)
@@ -95,6 +98,9 @@
     <select id="findAllByCompanyId" resultType="com.kaishengit.pojo.Customer">
         select * from t_customer
         WHERE companyid = #{id}
+    </select>
+    <select id="findAllCustomer" resultType="com.kaishengit.pojo.Customer">
+        select * from t_customer
     </select>
 
 </mapper>

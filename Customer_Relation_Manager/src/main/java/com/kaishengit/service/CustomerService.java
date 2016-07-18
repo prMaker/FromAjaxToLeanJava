@@ -10,6 +10,7 @@ import com.kaishengit.pojo.Customer;
 import com.kaishengit.pojo.User;
 import com.kaishengit.util.PinYin;
 import com.kaishengit.util.ShiroUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -205,22 +206,20 @@ public class CustomerService {
         Customer customer = customerMapper.findById(id);
         if(customer != null){
 
-            mecard.append("MECARD:N:");
-            mecard.append(customer.getName());
-            if(customer.getCompanyid() != null){
-                mecard.append(";ORG:");
-                mecard.append(customer.getCompanyname());
+            mecard.append("MECARD:N:"+customer.getName()+";");
+            if(StringUtils.isNotEmpty(customer.getCompanyname())){
+                mecard.append("ORG:"+customer.getCompanyname()+";");
             }
-            mecard.append(";TEL:");
-            mecard.append(customer.getTel());
-            if(customer.getEmail() != null) {
-                mecard.append(";EMAIL:");
-                mecard.append(customer.getEmail());
+            if(StringUtils.isNotEmpty(customer.getTel())){
+                mecard.append("TEL:"+customer.getTel()+";");
             }
-            if(customer.getAddress() != null) {
-                mecard.append(";ADR:");
-                mecard.append(customer.getAddress());
+            if(StringUtils.isNotEmpty(customer.getEmail())) {
+                mecard.append("EMAIL:"+customer.getEmail()+";");
             }
+            if(StringUtils.isNotEmpty(customer.getAddress())) {
+                mecard.append("ADR:"+customer.getAddress()+";");
+            }
+            mecard.append(";");
         }
 
         return mecard;

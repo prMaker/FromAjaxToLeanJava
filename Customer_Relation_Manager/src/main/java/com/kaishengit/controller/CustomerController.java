@@ -174,15 +174,16 @@ public class CustomerController {
     public void getQrCode(@PathVariable Integer id, HttpServletResponse response) throws WriterException, IOException {
         String mecard = customerService.makeMecard(id).toString();
 
-        Hashtable hints = new Hashtable();
+        Map<EncodeHintType,Object> hints = Maps.newHashMap();
         hints.put(EncodeHintType.CHARACTER_SET,"UTF-8");
 
-        BitMatrix bitMatrix = new MultiFormatWriter().encode(mecard,BarcodeFormat.QR_CODE,300,300);
+        BitMatrix bitMatrix = new MultiFormatWriter().encode(mecard,BarcodeFormat.QR_CODE,300,300,hints);
         OutputStream outputStream = response.getOutputStream();
 
         MatrixToImageWriter.writeToStream(bitMatrix,"png",outputStream);
         outputStream.flush();
         outputStream.close();
+
     }
 
     /**

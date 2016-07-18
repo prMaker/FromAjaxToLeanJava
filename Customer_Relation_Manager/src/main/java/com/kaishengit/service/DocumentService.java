@@ -104,22 +104,22 @@ public class DocumentService {
      * @param fid
      * @return
      */
-    public List<Document> getFidList(Integer fid){
-
-        List<Document> fidList = null;
-        while (fid != 0){
-            Document document = documentMapper.findDocumentById(fid);
-            fid = document.getFid();
-            fidList.add(document);
-        }
-
-        List<Document> fidListInversion = null;
-        int length = fidList.size();
+//    public List<Document> getFidList(Integer fid){
+//
+//        List<Document> fidList = null;
+//        while (fid != 0){
+//            Document document = documentMapper.findDocumentById(fid);
+//            fid = document.getFid();
+//            fidList.add(document);
+//        }
+//
+//        List<Document> fidListInversion = null;
+//        int length = fidList.size();
 //        TODO 文档面包屑的制作
-        for(int i = 0; i < length; i++){
-            fidListInversion.add(fidList.get(length-i-1));
-        }
-        return fidListInversion;
-    }
+//        for(int i = 0; i < length; i++){
+//            fidListInversion.add(fidList.get(length-i-1));
+//        }
+//        return fidListInversion;
+//    }
 
 }

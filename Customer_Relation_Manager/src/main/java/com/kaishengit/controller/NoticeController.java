@@ -107,6 +107,12 @@ public class NoticeController {
         return "notice/view";
     }
 
+    /**
+     * 上传文件
+     * @param file
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> upload(MultipartFile file) throws IOException {

@@ -344,7 +344,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     $("#edit_address").val(customer.address);
                     $("#edit_companyid").val(customer.companyid);
                     $("#edit_level").val(customer.level);
-//TODO 公司和个人单选框怎么选择
 
                     $("#editCustomerModal").modal({
                         show:true,

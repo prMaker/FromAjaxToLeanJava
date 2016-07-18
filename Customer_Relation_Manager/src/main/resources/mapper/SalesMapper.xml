@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kaishengit.mapper.SalesMapper">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into t_sales (userid, username, customerid, customername,
+         name, price, progress, lasttime, successtime)
+         values (
+         #{userId},#{username},#{customerid},#{customername},#{name},
+         #{price},#{progress},#{lasttime},#{successtime}
+         );
+    </insert>
+    <update id="update">
+        update t_sales SET progress=#{progress},lasttime=#{lasttime},
+        successtime=#{successtime}
+        where id=#{id}
+    </update>
+    <delete id="delSales">
+        DELETE FROM t_sales
+        WHERE id=#{id}
+    </delete>
+    <select id="findAll" resultType="com.kaishengit.pojo.Sales">
+        select * from t_sales
+    </select>
+    <select id="findAllByParam" resultType="com.kaishengit.pojo.Sales">
+        select * from t_sales
+        <where>
+            <if test="userid != null and userid != ''">
+                userid=#{userid}
+            </if>
+            <if test="progress != null and progress != ''">
+                and progress=#{progress}
+            </if>
+            <if test="startTime != null and progress != ''">
+                and createtime >= date(#{startTime})
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and createtime &lt;= date(#{endTime})
+            </if>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+        ORDER BY id DESC
+        limit ${start},${length}
+    </select>
+    <select id="findById" resultType="com.kaishengit.pojo.Sales">
+        select * from t_sales
+        WHERE id=#{id}
+    </select>
+    <select id="countByParam" resultType="java.lang.Long">
+        select count(1) FROM t_sales
+        <where>
+            <if test="userid != null and userid != ''">
+                userid=#{userid}
+            </if>
+            <if test="progress != null and progress != ''">
+                and progress=#{progress}
+            </if>
+            <if test="startTime != null and progress != ''">
+                and createtime >= date(#{startTime})
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and createtime &lt;= date(#{endTime})
+            </if>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

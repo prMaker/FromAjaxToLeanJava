@@ -35,7 +35,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <%--客户信息显示--%>
             <section class="content">
-
                 <div class="box box-primary">
 
                     <div class="box-header with-border">
@@ -50,8 +49,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </c:choose>
 
                              ${customer.name}</h2>
-                        <a href="javascript:;" id="openCustomerBtn" class="btn btn-warning btn-xs pull-right" style="margin:0px 5px"><i class="fa fa-user-plus"></i>公开客户</a>
-                        <a href="javascript:;" id="moveCustomerBtn" class="btn btn-primary btn-xs pull-right"><i class="fa fa-user-md"></i>转移客户</a>
+                        <c:if test="${not empty customer.userid}">
+                            <a href="javascript:;" id="openCustomerBtn" class="btn btn-warning btn-xs pull-right" style="margin:0px 5px"><i class="fa fa-user-plus"></i>公开客户</a>
+                            <a href="javascript:;" id="moveCustomerBtn" class="btn btn-primary btn-xs pull-right"><i class="fa fa-user-md"></i>转移客户</a>
+                        </c:if>
 
                         <%--<shiro:hasRole name="经理" >--%>
                             <%--<a href="/notice/new" class="btn btn-success btn-xs pull-right"><i class="fa fa-pencil"></i>发表公告</a>--%>
@@ -108,21 +109,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </section>
 
             <%--客户相关活动管理--%>
-                <section class="content container" style="position: relative">
+            <section class="content container" style="position: relative">
                     <%--项目管理显示--%>
                     <div class="box box-primary" style="width: 66%;float:left;">
                         <div class="box-header with-border">
-                            <h2 class="box-title"><i class="fa fa-list"></i> 项目管理</h2>
+                            <h2 class="box-title" style="margin: 0px 30px"><i class="fa fa-list"></i> 项目管理</h2>
                         </div>
                         <div class="box-body">
-                            <h4>暂无项目管理</h4>
+                            <h4 style="margin: 0px 60px">暂无销售机会</h4>
                         </div>
                     </div>
 
                     <%--二维码显示--%>
-                    <div class="box box-primary" style="width: 31%;position: relative;float:right;">
+                    <div class="box box-primary collapsed-box" style="width: 31%;position: relative;float:right;">
                          <div class="box-header with-border">
-                             <h2 class="box-title"><i class="fa fa-qrcode"></i> 二维码显示客户信息</h2>
+                             <h2 class="box-title"  style="margin: 0px 30px"><i class="fa fa-qrcode"></i> 二维码显示客户信息</h2>
+                             <div class="box-tools pull-right" style="margin: 0px 30px">
+                                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                             </div>
                          </div>
                          <div class="box-body" style="text-align: center">
                              <img src="/customer/qrcode/${customer.id}.png" alt="">
@@ -132,10 +136,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <%--待办事项显示--%>
                     <div class="box box-primary" style="width: 31%;position: relative;float:right;clear: both;">
                         <div class="box-header with-border">
-                            <h2 class="box-title"><i class="fa fa-pencil-square-o"></i> 待办事项</h2>
+                            <h2 class="box-title" style="margin: 0px 30px"><i class="fa fa-pencil-square-o"></i> 待办事项</h2>
                         </div>
                         <div class="box-body">
-                            <h4>暂无代办事项</h4>
+                            <h4 style="margin: 0px 60px">暂无代办事项</h4>
                         </div>
                     </div>
                 </section>
@@ -238,7 +242,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 var id = ${customer.id};
                 $.get("/customer/open/"+id).done(function (data) {
                     if(data == "success"){
-                        window.location.href = "/customer";
+                        window.location.href="/customer";
                     }
                 }).fail(function () {
                     alert("请求服务器异常");

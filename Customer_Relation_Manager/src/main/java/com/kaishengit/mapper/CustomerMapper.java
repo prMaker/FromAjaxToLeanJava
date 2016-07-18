@@ -33,4 +33,7 @@ public interface CustomerMapper {
     void update(Customer cust);
 
     void del(Integer id);
+
+    List<Customer> findAllCustomer();
+
 }
