@@ -2,10 +2,13 @@ package com.kaishengit.controller;
 
 import com.google.common.collect.Maps;
 import com.kaishengit.dto.DataTablesResult;
+import com.kaishengit.dto.JSONResult;
 import com.kaishengit.pojo.Customer;
 import com.kaishengit.pojo.Sales;
 import com.kaishengit.pojo.SalesLog;
+import com.kaishengit.pojo.Task;
 import com.kaishengit.service.SalesService;
+import com.kaishengit.service.TaskService;
 import com.kaishengit.util.ShiroUtil;
 import com.kaishengit.util.Strings;
 import org.springframework.stereotype.Controller;
@@ -29,6 +32,8 @@ public class SalesController {
 
     @Inject
     private SalesService salesService;
+    @Inject
+    private TaskService taskService;
 
     @RequestMapping()
     public String sales(Model model){
@@ -93,9 +98,22 @@ public class SalesController {
     public String sale(@PathVariable Integer id,Model model){
         List<SalesLog> salesLogList = salesService.findAllSalesLogBySalesid(id);
         Sales sales = salesService.findById(id);
+        List<Task> taskList = taskService.findallBySalesid(id);
+        model.addAttribute("taskList",taskList);
         model.addAttribute("sales",sales);
         model.addAttribute("salesLogList",salesLogList);
         return "sales/sale";
+    }
+
+    /**
+     * 获取id的task
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/task/{id:\\d+}",method = RequestMethod.GET)
+    @ResponseBody
+    public JSONResult taskLoad(@PathVariable Integer id){
+        return new JSONResult(taskService.findById(id));
     }
 
     /**

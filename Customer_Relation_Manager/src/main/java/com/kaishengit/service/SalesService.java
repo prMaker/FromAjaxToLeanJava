@@ -113,6 +113,10 @@ public class SalesService {
         if(!Sales.getProgressList().contains(progress)){
             throw new NotFoundException();
         }
+
+//        TODO 添加完成交易事件记录
+//        TODO 添加销售机会关联页面
+
         sales.setProgress(progress);
         sales.setLasttime(DateTime.now().toString("YYYY-MM-dd HH:mm:ss"));
         salesMapper.update(sales);

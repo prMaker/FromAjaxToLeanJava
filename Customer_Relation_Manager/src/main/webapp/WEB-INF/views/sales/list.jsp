@@ -224,6 +224,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
             "endDate": "07/15/2016"
         }, function(start, end, label) {
             console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+//            TODO 查看老师代码
+//            TODO 重写daterangepicker 中的数据获取  使用事件
+
+
+
+
+//            //daterangepicker
+//            $("#rangepicker").daterangepicker({
+//                format: "YYYY-MM-DD",
+//            @@ -223,18 +258,53 @@ scratch. This page gets rid of all links and provides the needed markup only.
+//        }
+//        });
+//        $('#rangepicker').on('apply.daterangepicker', function(ev, picker) {
+//            -            console.log(picker.startDate.format('YYYY-MM-DD'));
+//            -            console.log(picker.endDate.format('YYYY-MM-DD'));
+//            +            $("#search_start_time").val(picker.startDate.format('YYYY-MM-DD'));
+//            +            $("#search_end_time").val(picker.endDate.format('YYYY-MM-DD'));
+//            +            //console.log(picker.startDate.format('YYYY-MM-DD'));
+//                    +            //console.log(picker.endDate.format('YYYY-MM-DD'));
+//        });
+
+
+
+
             var startTime = moment(start).format("YYYY-MM-DD");
             var endTime = moment(end).format("YYYY-MM-DD");
             $("#search_starttime").val(startTime);
@@ -274,6 +298,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             }
         });
 
+//        搜索
         $("#searchBtn").click(function () {
             $dataTable.ajax.reload();
         });
@@ -299,7 +324,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 {"data": function (row) {
                     return "<a href='/customer/"+row.customerid+"'>"+row.customername+"</a>"
                 }},
-                {"data":"price"},
+                {"data": function (row) {
+                    return "￥"+row.price;
+                }},
                 {"data": function (row) {
 //                    "progress"
                     if(row.progress == "完成交易"){

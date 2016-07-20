@@ -11,8 +11,6 @@ import java.util.Map;
  */
 public interface SalesMapper {
 
-    Sales findAll();
-
     List<Sales> findAllByParam(Map<String,Object> param);
 
     void save(Sales sales);

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kaishengit.mapper.TaskMapper">
+
+    <cache/>
+    <insert id="saveTask" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_task (title, start, `end`, color, remindertime,custid, salesid, userid, done)
+        VALUES  (#{title},#{start},#{end},#{color},#{remindertime},#{custid},#{salesid},#{userid},#{done})
+    </insert>
+    <update id="update">
+        UPDATE t_task set done=#{done}
+        where id=#{id}
+    </update>
+    <delete id="del">
+        DELETE FROM t_task WHERE id=#{id}
+    </delete>
+    <select id="findAllByParam" resultType="com.kaishengit.pojo.Task">
+        select * FROM t_task
+        <where>
+            <if test="userid != null and userid != ''">
+                userid=#{userid}
+            </if>
+            <if test="salesid != null and salesid != ''">
+                and salesid=#{salesid}
+            </if>
+            <if test="start != null and start != ''">
+                and start >= date(#{start}) and end &lt;= date(#{end})
+            </if>
+        </where>
+        order by id desc
+    </select>
+    <select id="findById" resultType="com.kaishengit.pojo.Task">
+        SELECT * FROM t_task
+        WHERE id=#{id}
+    </select>
+    <select id="findAllOutOfTime" resultType="com.kaishengit.pojo.Task">
+        SELECT * FROM t_task
+        WHERE
+        date(#{now}) >= end and done=false and userid=#{id}
+    </select>
+    <select id="findAllBySalesid" resultType="com.kaishengit.pojo.Task">
+        SELECT * FROM t_task
+        WHERE salesid = #{id}
+    </select>
+    <select id="findBySalesid" resultType="com.kaishengit.pojo.Task">
+        SELECT * FROM t_task
+        WHERE salesid = #{id}
+    </select>
+
+</mapper>

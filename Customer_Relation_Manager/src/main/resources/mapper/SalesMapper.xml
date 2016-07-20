@@ -18,9 +18,7 @@
         DELETE FROM t_sales
         WHERE id=#{id}
     </delete>
-    <select id="findAll" resultType="com.kaishengit.pojo.Sales">
-        select * from t_sales
-    </select>
+
     <select id="findAllByParam" resultType="com.kaishengit.pojo.Sales">
         select * from t_sales
         <where>
