@@ -29,17 +29,23 @@
                 and progress=#{progress}
             </if>
             <if test="startTime != null and progress != ''">
-                and createtime >= date(#{startTime})
+                and date(createtime) >= #{startTime}
             </if>
             <if test="endTime != null and endTime != ''">
-                and createtime &lt;= date(#{endTime})
+                and date(createtime) &lt;= #{endTime}
             </if>
             <if test="name != null and name != ''">
                 and name like concat('%',#{name},'%')
             </if>
+            <if test="customerid != null and customerid != ''">
+                and customerid = #{customerid}
+            </if>
         </where>
         ORDER BY id DESC
-        limit ${start},${length}
+        <if test="start != null and start != '' and length != null and length != ''">
+            limit ${start},${length}
+        </if>
+
     </select>
     <select id="findById" resultType="com.kaishengit.pojo.Sales">
         select * from t_sales

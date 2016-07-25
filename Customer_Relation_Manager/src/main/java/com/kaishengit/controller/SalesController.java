@@ -3,6 +3,7 @@ package com.kaishengit.controller;
 import com.google.common.collect.Maps;
 import com.kaishengit.dto.DataTablesResult;
 import com.kaishengit.dto.JSONResult;
+import com.kaishengit.exception.NotFoundException;
 import com.kaishengit.pojo.Customer;
 import com.kaishengit.pojo.Sales;
 import com.kaishengit.pojo.SalesLog;
@@ -97,6 +98,12 @@ public class SalesController {
     @RequestMapping(value = "/{id:\\d+}",method = RequestMethod.GET)
     public String sale(@PathVariable Integer id,Model model){
         List<SalesLog> salesLogList = salesService.findAllSalesLogBySalesid(id);
+        if(salesLogList == null){
+            throw new  NotFoundException();
+        }
+        for(SalesLog salesLog :salesLogList){
+            System.out.println(salesLog);
+        }
         Sales sales = salesService.findById(id);
         List<Task> taskList = taskService.findallBySalesid(id);
         model.addAttribute("taskList",taskList);
@@ -113,7 +120,11 @@ public class SalesController {
     @RequestMapping(value = "/task/{id:\\d+}",method = RequestMethod.GET)
     @ResponseBody
     public JSONResult taskLoad(@PathVariable Integer id){
-        return new JSONResult(taskService.findById(id));
+        Task task = taskService.findById(id);
+        if(task == null){
+            throw new NotFoundException();
+        }
+        return new JSONResult(task);
     }
 
     /**

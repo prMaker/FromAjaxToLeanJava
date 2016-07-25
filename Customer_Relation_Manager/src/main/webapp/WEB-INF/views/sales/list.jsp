@@ -248,10 +248,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 
-            var startTime = moment(start).format("YYYY-MM-DD");
-            var endTime = moment(end).format("YYYY-MM-DD");
-            $("#search_starttime").val(startTime);
-            $("#search_endtime").val(endTime);
+//            var startTime = moment(start).format("YYYY-MM-DD");
+//            var endTime = moment(end).format("YYYY-MM-DD");
+//            $("#search_starttime").val(startTime);
+//            $("#search_endtime").val(endTime);
+        });
+
+        $("#datepicker").on("apply.daterangepicker", function (ev, picker) {
+            $("#search_starttime").val(picker.startDate.format("YYYY-MM-DD"));
+            $("#search_endtime").val(picker.endDate.format("YYYY-MM-DD"));
         });
 
 //        添加机会

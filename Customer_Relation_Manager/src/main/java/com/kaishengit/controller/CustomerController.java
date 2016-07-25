@@ -11,8 +11,10 @@ import com.kaishengit.dto.DataTablesResult;
 import com.kaishengit.dto.JSONResult;
 import com.kaishengit.exception.NotFoundException;
 import com.kaishengit.pojo.Customer;
+import com.kaishengit.pojo.Sales;
 import com.kaishengit.pojo.User;
 import com.kaishengit.service.CustomerService;
+import com.kaishengit.service.SalesService;
 import com.kaishengit.util.ShiroUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +41,8 @@ public class CustomerController {
 
     @Inject
     private CustomerService customerService;
+    @Inject
+    private SalesService salesService;
 
     /**
      * customer列表页面显示
@@ -162,8 +166,12 @@ public class CustomerController {
             List<Customer> customerList = customerService.findAllCustomerByCompanyId(customer.getId());
             model.addAttribute("customerList",customerList);
         }
+        Map<String,Object> param = Maps.newHashMap();
+        param.put("customerid",id);
+        List<Sales> salesList = salesService.findAllSalesByParam(param);
         model.addAttribute("customer",customer);
         model.addAttribute("userList",userList);
+        model.addAttribute("salesList",salesList);
         return "customer/cust";
     }
 
@@ -183,7 +191,7 @@ public class CustomerController {
         MatrixToImageWriter.writeToStream(bitMatrix,"png",outputStream);
         outputStream.flush();
         outputStream.close();
-
+//  TODO 解决权限问题  列表中的公司显示
     }
 
     /**

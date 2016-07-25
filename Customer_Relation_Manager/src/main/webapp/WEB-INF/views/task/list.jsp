@@ -223,6 +223,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE App -->
 <script src="/static/dist/js/app.min.js"></script>
 <script src="/static/plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/static/plugins/datatables/js/dataTables.jqueryui.min.js"></script>
 <script src="/static/plugins/datatables/js/dataTables.bootstrap.min.js"></script>
 <script src="/static/plugins/moment/moment.min.js"></script>
 <script src="/static/plugins/validate/jquery.validate.min.js"></script>
@@ -241,7 +242,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             buttonText: {
                 today: '今天'
             },
-
             events: "task/load",
 //            TODO 完成信息load
 

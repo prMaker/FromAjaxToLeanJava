@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <!--
@@ -66,7 +67,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <td>关联客户</td>
                             <td><a href="/customer/${sales.customerid}">${sales.customername}</a></td>
                             <td>价值</td>
-                            <td>${sales.price}</td>
+                            <td>￥<fmt:formatNumber value="${sales.price}"/></td>
                         </tr>
                         <tr>
                             <td>当前进度</td>
@@ -91,39 +92,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="box-body">
                     <ul class="timeline">
 
-                        <%--TODO 查看老师时间线写法--%>
-
                         <c:forEach items="${salesLogList}" var="salesLog">
-                            <c:choose>
-                                <c:when test="${salesLog.type == 'auto'}">
+                            <li>
+                                <c:choose>
+                                    <c:when test="${salesLog.type == 'auto'}">
+                                            <i class="fa fa-arrow-up bg-yellow-active"></i>
+                                    </c:when>
+                                    <c:otherwise>
+                                            <i class="fa fa-comments bg-blue-active"></i>
+                                    </c:otherwise>
+                                </c:choose>
 
-                                    <li>
-                                        <i class="fa fa-arrow-up bg-yellow-active"></i>
-                                        <div class="timeline-item">
-
-                                            <div class="timeline-body times-ago">
-                                                ${salesLog.context}
-                                                    ${salesLog.createtime}
-                                            </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-body times-ago">
+                                            <h3 class="timeline-hearder no-border">${salesLog.context}</h3>
+                                            <span class="time"><i class="fa fa-clock-o"></i> <span class="timeago" title="${salesLog.createtime}"></span></span>
                                         </div>
-                                    </li>
-
-                                </c:when>
-                                <c:otherwise>
-                                    <li>
-                                        <i class="fa fa-comments bg-blue-active"></i>
-                                        <div class="timeline-item">
-
-                                            <div class="timeline-body times-ago">
-                                                    ${salesLog.context}
-                                                <span class="timeago" title="${salesLog.createtime}"></span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </c:otherwise>
-                            </c:choose>
+                                    </div>
+                            </li>
                         </c:forEach>
-
+                        <li><i class="fa fa-clock-o bg-gray"></i></li>
                     </ul>
                 </div>
             </div>
@@ -163,7 +151,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- ./wrapper -->
 
 
-
+<%--修改进度Modal--%>
 <div class="modal fade" id="editSalesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -196,7 +184,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
 </div>
 
-
+<%--新增销售记录Modal--%>
 <div class="modal fade" id="newSalesLogModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -210,7 +198,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                     <input type="hidden" name="salesid" value="${sales.id}">
                     <div class="form-group">
-                        <textarea id="newSalesLog"></textarea>
+                        <textarea id="newSalesLog" name="context"></textarea>
                     </div>
 
                     <div class="modal-footer">
@@ -224,7 +212,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
 </div>
 
-
+<%--代办时间MOdal--%>
 <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -264,7 +252,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
 </div>
 
-
+<%--新增代办Modal--%>
 <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -370,6 +358,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/static/plugins/dateRangePicker/moment.min.js"></script>
 <script src="/static/plugins/dateRangePicker/daterangepicker.js"></script>
 <script src="/static/plugins/timeago/timeago.js"></script>
+<script src="/static/plugins/timeago/timeago_zh_cn.js"></script>
 <script src="/static/plugins/simditor/scripts/module.min.js"></script>
 <script src="/static/plugins/simditor/scripts/hotkeys.min.js"></script>
 <script src="/static/plugins/simditor/scripts/uploader.min.js"></script>
@@ -416,7 +405,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 keyboard:false
             });
         });
-
         var simditor = new Simditor({
             textarea:"#newSalesLog",
 //            TODO 查看老师代码
@@ -440,6 +428,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 $("#task_title").focus();
             }
 //            TODO 查看老师所写的momen库中的意思
+//            TODO 查看相关连接
             if (moment($("#start_time").val()).isAfter(moment($("#end_time").val()))) {
                 alert("结束时间大于开始时间");
                 return;
@@ -459,6 +448,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             color:"#61a5e8"
         });
 
+//        代办完成
         $(document).delegate(".taskManager","click", function () {
             var id = $(this).attr("rel");
             $.get("/sales/task/"+id).done(function (data) {

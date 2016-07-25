@@ -1,0 +1,17 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.kaishengit.pojo">
+
+    <!--实体类和表名的对应关系-->
+    <class name="User" table="user">
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="name" column="name"/>
+        <property name="date" column="date">
+        </property>
+        <property name="password" column="password"/>
+        <property name="address" column="address"/>
+    </class>
+</hibernate-mapping>

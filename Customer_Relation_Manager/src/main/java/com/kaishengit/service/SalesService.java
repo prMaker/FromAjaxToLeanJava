@@ -40,39 +40,43 @@ public class SalesService {
 
     /**
      * 根据搜索参数参数查找dataTable数据
+     *
      * @param param
      * @return
      */
-    public List<Sales> findAllSalesByParam(Map<String,Object> param) {
+    public List<Sales> findAllSalesByParam(Map<String, Object> param) {
         return salesMapper.findAllByParam(param);
     }
 
     /**
      * 根据用户查找各自的所有用户数量
+     *
      * @return
      */
     public Long coungAll() {
-        Map<String,Object> param = Maps.newHashMap();
-        if(ShiroUtil.isEmployee()){
-            param.put("userid",ShiroUtil.getCurrentUserID());
+        Map<String, Object> param = Maps.newHashMap();
+        if (ShiroUtil.isEmployee()) {
+            param.put("userid", ShiroUtil.getCurrentUserID());
         }
         return salesMapper.countByParam(param);
     }
 
     /**
      * 根据查询条件筛选查找的数量
+     *
      * @param param
      * @return
      */
     public Long countFilterByparam(Map<String, Object> param) {
-        if(ShiroUtil.isEmployee()){
-            param.put("userid",ShiroUtil.getCurrentUserID());
+        if (ShiroUtil.isEmployee()) {
+            param.put("userid", ShiroUtil.getCurrentUserID());
         }
         return salesMapper.countByParam(param);
     }
 
     /**
      * 保存新建客户
+     *
      * @param sales
      */
     @Transactional
@@ -80,7 +84,7 @@ public class SalesService {
         sales.setUserId(ShiroUtil.getCurrentUserID());
         sales.setUsername(ShiroUtil.getCurrentUserName());
         Customer customer = customerMapper.findById(sales.getCustomerid());
-        if(customer == null){
+        if (customer == null) {
             throw new NotFoundException();
         }
 //        保存跟进记录
@@ -90,52 +94,56 @@ public class SalesService {
 
         SalesLog salesLog = new SalesLog();
         salesLog.setType(SalesLog.TYPE_AUTO);
-        salesLog.setContext(ShiroUtil.getCurrentUserName()+"创建了该机会");
+        salesLog.setContext(ShiroUtil.getCurrentUserName() + "创建了该机会");
         salesLog.setSalesid(sales.getId());
         salesLogMapper.save(salesLog);
     }
 
     /**
      * 修改进度
+     *
      * @param id
      * @param progress
      */
     @Transactional
     public void editProgress(Integer id, String progress) {
         Sales sales = salesMapper.findById(id);
-        if(sales == null){
+        if (sales == null) {
             throw new NotFoundException();
         }
-        if(sales.getUserId() != ShiroUtil.getCurrentUserID()
-                && !ShiroUtil.isManager()){
+        if (sales.getUserId() != ShiroUtil.getCurrentUserID()
+                && !ShiroUtil.isManager()) {
             throw new NotFoundException();
         }
-        if(!Sales.getProgressList().contains(progress)){
+        if (!Sales.getProgressList().contains(progress)) {
             throw new NotFoundException();
         }
 
-//        TODO 添加完成交易事件记录
 //        TODO 添加销售机会关联页面
 
+        if (progress.equals("完成交易")) {
+            sales.setSuccesstime(DateTime.now().toString("YYYY-MM-dd"));
+        }
         sales.setProgress(progress);
         sales.setLasttime(DateTime.now().toString("YYYY-MM-dd HH:mm:ss"));
         salesMapper.update(sales);
 
         SalesLog salesLog = new SalesLog();
         salesLog.setSalesid(id);
-        salesLog.setContext("将当前进度修改为"+progress);
+        salesLog.setContext("将当前进度修改为" + progress);
         salesLog.setType(SalesLog.TYPE_AUTO);
         salesLogMapper.save(salesLog);
     }
 
     /**
      * 删除销售机会
+     *
      * @param id
      */
     @Transactional
     public void delSales(Integer id) {
         Sales sales = salesMapper.findById(id);
-        if(sales == null){
+        if (sales == null) {
             throw new NotFoundException();
         }
         salesLogMapper.delBySalesId(id);
@@ -145,6 +153,7 @@ public class SalesService {
 
     /**
      * 获取跟进记录列表
+     *
      * @param saleId
      * @return
      */
@@ -158,12 +167,13 @@ public class SalesService {
 
     /**
      * 手动修改跟进记录
+     *
      * @param salesLog
      */
     public void saveSalesLog(SalesLog salesLog) {
         Sales sales = salesMapper.findById(salesLog.getSalesid());
-        if(sales.getUserId() != ShiroUtil.getCurrentUserID()
-                && !ShiroUtil.isManager()){
+        if (sales.getUserId() != ShiroUtil.getCurrentUserID()
+                && !ShiroUtil.isManager()) {
             throw new ForbiddenException();
         }
         salesLog.setType(SalesLog.TYPT_HAND);

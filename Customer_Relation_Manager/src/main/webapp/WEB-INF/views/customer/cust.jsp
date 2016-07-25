@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <!--
@@ -111,12 +112,48 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <%--客户相关活动管理--%>
             <section class="content container" style="position: relative">
                     <%--项目管理显示--%>
-                    <div class="box box-primary" style="width: 66%;float:left;">
+                    <div  style="width: 66%;float:left;" class="box box-primary">
                         <div class="box-header with-border">
-                            <h2 class="box-title" style="margin: 0px 30px"><i class="fa fa-list"></i> 项目管理</h2>
+                            <h2 class="box-title" style="margin: 0px 30px"><i class="fa fa-list"></i> 销售机会</h2>
                         </div>
                         <div class="box-body">
-                            <h4 style="margin: 0px 60px">暂无销售机会</h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>机会名称</th>
+                                        <th>价值</th>
+                                        <th>当前进度</th>
+                                        <th>最后跟进时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <c:forEach items="${salesList}" var="sales">
+                                            <tr>
+                                                <td><a href="/sales/${sales.id}">${sales.name}</a></td>
+                                                <td>￥<fmt:formatNumber value="${sales.price}" /> </td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${sales.progress == '完成交易'}">
+                                                            <span class="btn btn-success btn-xs">${sales.progress}</span>
+                                                        </c:when>
+                                                        <c:when test="${sales.progress == '交易搁置'}">
+                                                            <span class="btn btn-danger btn-xs">${sales.progress}</span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span class="btn btn-primary btn-xs">${sales.progress}</span>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                                <td>${sales.lasttime}</td>
+                                            </tr>
+                                        </c:forEach>
+                                </tbody>
+                            </table>
+
+
+
+
+
                         </div>
                     </div>
 
@@ -134,7 +171,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
 
                     <%--待办事项显示--%>
-                    <div class="box box-primary" style="width: 31%;position: relative;float:right;clear: both;">
+                    <div class="box box-primary" style="width: 31%;position: relative;float:right;clear: right">
                         <div class="box-header with-border">
                             <h2 class="box-title" style="margin: 0px 30px"><i class="fa fa-pencil-square-o"></i> 待办事项</h2>
                         </div>
