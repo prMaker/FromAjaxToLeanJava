@@ -27,8 +27,16 @@
         <!--session配置-->
         <property name="show_sql">true</property>
         <property name="current_session_context_class">thread</property>
-        
+
         <!--关联文件-->
         <mapping resource="hbm/User.hbm.xml"/>
+        <mapping resource="hbm/Dept.hbm.xml"/>
+        <mapping resource="hbm/Employee.hbm.xml"/>
+        <mapping resource="hbm/Person.hbm.xml"/>
+        <mapping resource="hbm/Card.hbm.xml"/>
     </session-factory>
+
+
+
+
 </hibernate-configuration>

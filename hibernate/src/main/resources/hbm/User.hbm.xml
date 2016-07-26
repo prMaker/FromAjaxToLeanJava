@@ -9,7 +9,7 @@
             <generator class="native"/>
         </id>
         <property name="name" column="name"/>
-        <property name="date" column="date">
+        <property name="date" column="date" type="timestamp">
         </property>
         <property name="password" column="password"/>
         <property name="address" column="address"/>

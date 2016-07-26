@@ -3,15 +3,16 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.kaishengit.pojo">
 
-    <!--实体类和表名的对应关系-->
-    <class name="User" table="user">
+    <class name="Dept" table="t_dept">
         <id name="id" column="id">
             <generator class="native"/>
         </id>
-        <property name="name" column="name"/>
-        <property name="date" column="date" type="timestamp">
-        </property>
-        <property name="password" column="password"/>
-        <property name="address" column="address"/>
+        <property name="deptname"/>
+        <set name="employeeSet" inverse="true" cascade="delete">
+            <key column="deptid"/>
+            <one-to-many class="Employee"/>
+        </set>
     </class>
+
+
 </hibernate-mapping>
