@@ -2,32 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f16dc878-248f-4e45-aa2d-2c50721a8545" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/kaishengit/pojo/Card.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/kaishengit/pojo/Dept.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/kaishengit/pojo/Employee.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/kaishengit/pojo/Person.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/hbm/Card.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/hbm/Dept.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/hbm/Person.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/hbm/employee.hbm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/kaishengit/service/CriteriaTestCase.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/kaishengit/service/HibernateLifeTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/kaishengit/service/HqlTestCase.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/kaishengit/service/NativeSqlTestCase.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/kaishengit/service/OneToManyTestCase.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/kaishengit/service/OneToOneTestCase.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/kaishengit/util/HibernateUtil.class" afterPath="$PROJECT_DIR$/target/classes/com/kaishengit/util/HibernateUtil.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/kaishengit/service/HibernateTestCase.class" afterPath="$PROJECT_DIR$/target/test-classes/com/kaishengit/service/HibernateTestCase.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/kaishengit/util/HibernateUtil.java" afterPath="$PROJECT_DIR$/src/main/java/com/kaishengit/util/HibernateUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/hbm/User.hbm.xml" afterPath="$PROJECT_DIR$/src/main/resources/hbm/User.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/hbm/User.hbm.xml" afterPath="$PROJECT_DIR$/target/classes/hbm/User.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../redis/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../redis/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ssmprac" afterPath="$PROJECT_DIR$/../ssmprac" />
     </list>
     <ignored path="hibernate.iws" />
@@ -178,6 +154,7 @@
         <option value="$PROJECT_DIR$/src/test/java/com/kaishengit/service/OneToManyTestCase.java" />
         <option value="$PROJECT_DIR$/src/main/resources/hbm/Person.hbm.xml" />
         <option value="$PROJECT_DIR$/src/test/java/com/kaishengit/service/OneToOneTestCase.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -249,10 +226,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="hibernate" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -990,7 +963,7 @@
       <option name="number" value="Default" />
       <updated>1469413156586</updated>
       <workItem from="1469413166401" duration="5987000" />
-      <workItem from="1469493129224" duration="32509000" />
+      <workItem from="1469493129224" duration="32714000" />
     </task>
     <servers />
   </component>
@@ -1027,7 +1000,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38496000" />
+    <option name="totallyTimeSpent" value="38701000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1491,6 +1464,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.5">
           <caret line="10" column="60" selection-start-line="10" selection-start-column="60" selection-end-line="10" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14835165">
+          <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
           <folding />
         </state>
       </provider>
