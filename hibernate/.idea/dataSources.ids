@@ -145,35 +145,53 @@ teaid</columns>
       <column id="45" parent="10" name="contentid">
         <data-type>int(11)</data-type>
       </column>
-      <key id="46" parent="10" name="PRIMARY">
+      <index id="46" parent="10" name="t_topic_contentid_uindex">
+        <columns>contentid</columns>
+        <desc-columns></desc-columns>
+        <unique>1</unique>
+      </index>
+      <key id="47" parent="10" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="47" parent="11" name="id">
+      <key id="48" parent="10" name="t_topic_contentid_uindex">
+        <columns>contentid</columns>
+        <underlying-index>t_topic_contentid_uindex</underlying-index>
+      </key>
+      <column id="49" parent="11" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="48" parent="11" name="content">
+      <column id="50" parent="11" name="content">
         <data-type>text</data-type>
       </column>
-      <column id="49" parent="11" name="topicid">
+      <column id="51" parent="11" name="topicid">
         <data-type>int(11)</data-type>
       </column>
-      <key id="50" parent="11" name="PRIMARY">
+      <index id="52" parent="11" name="t_topic_content_topicid_uindex">
+        <columns>topicid</columns>
+        <desc-columns></desc-columns>
+        <unique>1</unique>
+      </index>
+      <key id="53" parent="11" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="51" parent="12" name="id">
+      <key id="54" parent="11" name="t_topic_content_topicid_uindex">
+        <columns>topicid</columns>
+        <underlying-index>t_topic_content_topicid_uindex</underlying-index>
+      </key>
+      <column id="55" parent="12" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="52" parent="12" name="username">
+      <column id="56" parent="12" name="username">
         <data-type>varchar(20)</data-type>
       </column>
-      <column id="53" parent="12" name="password">
+      <column id="57" parent="12" name="password">
         <data-type>varchar(20)</data-type>
       </column>
-      <key id="54" parent="12" name="PRIMARY">
+      <key id="58" parent="12" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>

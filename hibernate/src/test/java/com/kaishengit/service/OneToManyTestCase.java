@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public class OneToManyTestCase {
 
-    /* TODO 最佳实践
+    /*
         1.Hibernate保存时,先存一，再存多
         2.让一的一端放弃关系维护
         3.fetch="join" 解决criteria的 N+1 问题
@@ -45,9 +45,7 @@ public class OneToManyTestCase {
         session.getTransaction().commit();
     }
 
-    /**
-     * TODO HQL未解决N+1问题
-     */
+
     @Test
     public void findByDept(){
         Session session = HibernateUtil.getSession();
@@ -73,12 +71,6 @@ public class OneToManyTestCase {
         session.getTransaction().commit();
     }
 
-    /**
-     * TODO mybatis中的N+1问题
-     */
-    /**
-     * TODO 使用hql语句始终触发N+1问题？
-     */
     @Test
     public void findEmployeeAll(){
         Session session = HibernateUtil.getSession();
