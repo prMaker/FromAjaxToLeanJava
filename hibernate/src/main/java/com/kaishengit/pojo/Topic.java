@@ -1,15 +1,22 @@
 package com.kaishengit.pojo;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by Administrator on 2016/7/27.
  */
+@Entity
+@Table(name = "t_topic")
 public class Topic implements Serializable {
     private static final long serialVersionUID = -6477196937995290142L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contentid",unique = true)
     private TopicContent topicContent;
 
     public Topic() {}

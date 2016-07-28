@@ -1,5 +1,6 @@
 package com.kaishengit.pojo;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -9,11 +10,18 @@ import java.util.Set;
 /*
 TODO 重做多对多
  */
+@Entity
+@Table(name = "t_teacher")
 public class Teacher implements Serializable{
     private static final long serialVersionUID = -4625830563325271234L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String teaname;
+
+    @ManyToMany(mappedBy = "teacherSet",cascade = CascadeType.REMOVE)
+    @OrderBy("id desc ")
     private Set<Student> studentSet;
 
     public Set<Student> getStudentSet() {

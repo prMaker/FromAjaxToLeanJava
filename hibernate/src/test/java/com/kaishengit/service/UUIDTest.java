@@ -16,7 +16,7 @@ public class UUIDTest {
     public void uuidTest(){
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
-        Task task = new Task("ksc",5);
+        Task task = new Task("TMD");
         session.save(task);
 
         session.getTransaction().commit();
@@ -48,4 +48,7 @@ public class UUIDTest {
 
         session2.getTransaction().commit();
     }
+
+    public void test
+
 }

@@ -1,12 +1,21 @@
 package com.kaishengit.pojo;
 
+
+import javax.persistence.*;
+
 /**
  * Created by Administrator on 2016/7/26.
  */
+@Entity
+@Table(name = "t_person")
 public class Person {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    @OneToOne
+    @PrimaryKeyJoinColumn
     private Card card;
 
     public Person(String name) {

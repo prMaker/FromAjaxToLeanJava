@@ -17,12 +17,12 @@ public class OneToOneTestCase2 {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
 
-        Topic topic = new Topic("野草");
-        TopicContent topicContent = new TopicContent("雪 坟 风筝");
+        Topic topic = new Topic("水晶");
+        TopicContent topicContent = new TopicContent("蓝 白 红水晶");
         topic.setTopicContent(topicContent);
 
-        session.save(topic);
         session.save(topicContent);
+        session.save(topic);
 
         session.getTransaction().commit();
     }

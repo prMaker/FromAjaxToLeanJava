@@ -1,23 +1,33 @@
 package com.kaishengit.pojo;
 
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by Administrator on 2016/7/27.
  */
+@Entity
+@Table(name = "t_task")
 public class Task implements Serializable{
 
     private static final long serialVersionUID = -7867952892033335524L;
+    @Id
+    @GenericGenerator(name="uuid",strategy="uuid")
+    @GeneratedValue(generator = "uuid")
     private String id;
     private String title;
+    @Version
     private Integer version;
 
     public Task() {
     }
 
-    public Task(String title, Integer version) {
+    public Task(String title) {
         this.title = title;
-        this.version = version;
     }
 
     public String getId() {

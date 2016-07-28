@@ -3,8 +3,10 @@ package com.kaishengit.service;
 import com.kaishengit.pojo.Dept;
 import com.kaishengit.pojo.Employee;
 import com.kaishengit.util.HibernateUtil;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -28,7 +30,7 @@ public class OneToManyTestCase {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
 
-        Dept dept = new Dept("PHP开发部");
+        Dept dept = new Dept("C++开发部");
 
         Employee employee1 = new Employee("刘三",dept);
         Employee employee2 = new Employee("李思",dept);
@@ -59,18 +61,36 @@ public class OneToManyTestCase {
 //            System.out.println(employee.getEmpname());
 //        }
 
-        String hql = "from Dept";
-        Query query = session.createQuery(hql);
-        List<Dept> deptList = query.list();
+        // Hql
+//        String hql = "from Dept";
+//        Query query = session.createQuery(hql);
+//        List<Dept> deptList = query.list();
+
+        Criteria criteria = session.createCriteria(Dept.class);
+
+        // 不加条件查询
+        List<Dept> deptList = criteria.list();
+
         for(Dept dept : deptList){
             for(Employee employee : dept.getEmployeeSet()){
                 System.out.println(employee.getEmpname());
             }
         }
 
+//        criteria.add(Restrictions.eq("id",22));
+//        Dept dept = (Dept) criteria.uniqueResult();
+//        for(Employee employee : dept.getEmployeeSet()){
+//            System.out.println(employee.getEmpname());
+//        }
+
+
         session.getTransaction().commit();
     }
 
+    /*
+    TODO 看sql必知必会看完后处理  在1对多关系中，1.查多后再查一能触发N+1问题， 2.查一后查多也可能可能触发N+1问题
+    TODO 但不好装成对象  求解
+     */
     @Test
     public void findEmployeeAll(){
         Session session = HibernateUtil.getSession();
@@ -83,15 +103,16 @@ public class OneToManyTestCase {
 //                           employee.getDept().getDeptname());
 
         // 多个 使用criteria
-//        List<Employee> employeeList = session.createCriteria(Employee.class).list();
+        List<Employee> employeeList = session.createCriteria(Employee.class).list();
 
         // 多个使用hql
 //        List<Employee> employeeList = session.createQuery("from Employee").list();
 
         // 多个 使用native sql
-        List<Employee> employeeList = session.createSQLQuery("SELECT * FROM t_employee").addEntity(Employee.class).list();
+//        List<Employee> employeeList = session.createSQLQuery("SELECT * FROM t_employee").addEntity(Employee.class).list();
 
         for(Employee employee : employeeList){
+            System.out.println(employee.getEmpname());
             System.out.println(employee.getId()+":"+employee.getEmpname()+":"+
                            employee.getDept().getDeptname());
         }
@@ -99,6 +120,18 @@ public class OneToManyTestCase {
         session.getTransaction().commit();
     }
 
+    @Test
+    public void findDept(){
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+
+        Dept dept = (Dept) session.get(Dept.class,22);
+        for(Employee employee : dept.getEmployeeSet()){
+            System.out.println(employee.getEmpname());
+        }
+
+        session.getTransaction().commit();
+    }
 
     @Test
     public void findEmployee(){
@@ -109,7 +142,6 @@ public class OneToManyTestCase {
         System.out.println(employee.getEmpname());
         System.out.println(employee.getDept().getDeptname());
 
-
         session.getTransaction().commit();
     }
 
@@ -118,7 +150,7 @@ public class OneToManyTestCase {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
 
-        Dept dept = (Dept) session.get(Dept.class,19);
+        Dept dept = (Dept) session.get(Dept.class,16);
         session.delete(dept);
 
         session.getTransaction().commit();

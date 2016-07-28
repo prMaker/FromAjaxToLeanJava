@@ -16,7 +16,7 @@ public class OneToOneTestCase {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
 
-        Card card = new Card("银行卡");
+        Card card = new Card("信用卡");
         Person person = new Person("李师师");
         card.setPerson(person);
 
@@ -27,11 +27,11 @@ public class OneToOneTestCase {
     }
 
     @Test
-    public void findPerSon(){
+    public void findPerson(){
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
 
-        Person person = (Person) session.get(Person.class,12);
+        Person person = (Person) session.get(Person.class,14);
         System.out.println(person.getName());
         System.out.println(person.getName()+" : "+person.getCard().getCardname());
 
@@ -43,7 +43,7 @@ public class OneToOneTestCase {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
 
-        Card card = (Card) session.get(Card.class,12);
+        Card card = (Card) session.get(Card.class,14);
         System.out.println(card.getCardname());
         System.out.println(card.getPerson().getName());
 

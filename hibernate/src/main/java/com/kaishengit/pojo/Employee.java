@@ -1,17 +1,26 @@
 package com.kaishengit.pojo;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.sql.Delete;
+
+import javax.persistence.*;
+
 /**
  * Created by Administrator on 2016/7/26.
  */
+@Entity
+@Table(name = "t_employee")
 public class Employee {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer deptid;
     private String empname;
+    @ManyToOne //(fetch = FetchType.LAZY)
+    @JoinColumn(name = "deptid")
     private Dept dept;
 
-    public Employee() {
-    }
+    public Employee() {}
 
     public Employee(String empname, Dept dept) {
         this.empname = empname;
@@ -28,14 +37,6 @@ public class Employee {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getDeptid() {
-        return deptid;
-    }
-
-    public void setDeptid(Integer deptid) {
-        this.deptid = deptid;
     }
 
     public String getEmpname() {
@@ -58,7 +59,6 @@ public class Employee {
     public String toString() {
         return "Employee{" +
                 "id=" + id +
-                ", deptid=" + deptid +
                 ", empname='" + empname + '\'' +
                 ", dept=" + dept +
                 '}';
