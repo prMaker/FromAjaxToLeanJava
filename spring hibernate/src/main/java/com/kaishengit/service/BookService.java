@@ -6,10 +6,13 @@ import com.kaishengit.dao.PublisherDao;
 import com.kaishengit.pojo.Book;
 import com.kaishengit.pojo.BookType;
 import com.kaishengit.pojo.Publisher;
+import com.kaishengit.pojo.SearchParam;
+import com.kaishengit.util.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -32,7 +35,7 @@ public class BookService {
     }
 
     public List<BookType> findAllType() {
-        return typeDao.findALL();
+        return typeDao.findAll();
     }
 
     public List<Publisher> findAllPublilsher() {
@@ -48,6 +51,24 @@ public class BookService {
     }
 
     public void deleteBookById(Integer id) {
-        bookDao.delete(id);
+        bookDao.deleteById(id);
+    }
+
+    public Page<Book> findByPageNoByParam(Integer pageNo,List<SearchParam> searchParamList) {
+//        Integer totalSize = bookDao.countByList(searchParamList).intValue();
+//
+//        Page<Book> bookPage = new Page<>(pageNo,5,totalSize);
+//        List<Book> bookList = bookDao.findByPage(bookPage,searchParamList);
+//        bookPage.setItems(bookList);
+        return bookDao.findByPageNoByParam(pageNo,searchParamList);
+    }
+
+    public Page<Book> findByPageNo(Integer pageNo) {
+        Integer totalSize = bookDao.countAll().intValue();
+
+        Page<Book> bookPage = new Page<>(pageNo,5,totalSize);
+        List<Book> bookList = bookDao.findByPage(bookPage);
+        bookPage.setItems(bookList);
+        return bookPage;
     }
 }

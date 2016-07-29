@@ -1,0 +1,18 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.kaishengit.pojo">
+
+    <class name="Employee" table="t_employee">
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="empname"/>
+        <many-to-one name="dept" class="Dept" column="deptid" fetch="join"/>
+
+    </class>
+
+
+
+
+</hibernate-mapping>

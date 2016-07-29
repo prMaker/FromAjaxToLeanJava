@@ -3,18 +3,21 @@ package com.kaishengit.controller;
 import com.kaishengit.pojo.Book;
 import com.kaishengit.pojo.BookType;
 import com.kaishengit.pojo.Publisher;
+import com.kaishengit.pojo.SearchParam;
 import com.kaishengit.service.BookService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.kaishengit.util.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
-import java.lang.reflect.Type;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/7/28.
@@ -27,9 +30,19 @@ public class BookController {
     private BookService bookService;
 
     @RequestMapping
-    public String list(Model model){
-        List<Book> bookList = bookService.findAllBook();
-        model.addAttribute("bookList",bookList);
+    public String list(Model model, @RequestParam(name = "p",required = false,defaultValue = "1") Integer pageNo, HttpServletRequest request){
+
+        List<Object> objectList = SearchParam.builderSearchParam(request);
+        List<SearchParam> searchParamList = (List<SearchParam>) objectList.get(0);
+        Map<String,String> pathVar = (Map<String, String>) objectList.get(1);
+        Page<Book> bookPage = null;
+        if(searchParamList != null){
+            bookPage = bookService.findByPageNoByParam(pageNo,searchParamList);
+        }else{
+            bookPage = bookService.findByPageNo(pageNo);
+        }
+        model.addAttribute("pathVar",pathVar);
+        model.addAttribute("bookPage",bookPage);
         return "book/list";
     }
 
