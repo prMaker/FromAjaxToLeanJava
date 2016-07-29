@@ -31,17 +31,22 @@ public class BookController {
 
     @RequestMapping
     public String list(Model model, @RequestParam(name = "p",required = false,defaultValue = "1") Integer pageNo, HttpServletRequest request){
+        List<SearchParam> searchParamList = SearchParam.builderSearchParam(request);
 
-        List<Object> objectList = SearchParam.builderSearchParam(request);
-        List<SearchParam> searchParamList = (List<SearchParam>) objectList.get(0);
-        Map<String,String> pathVar = (Map<String, String>) objectList.get(1);
         Page<Book> bookPage = null;
+
         if(searchParamList != null){
             bookPage = bookService.findByPageNoByParam(pageNo,searchParamList);
         }else{
             bookPage = bookService.findByPageNo(pageNo);
         }
-        model.addAttribute("pathVar",pathVar);
+
+
+        List<BookType> bookTypeList = bookService.findAllType();
+        List<Publisher> publisherList = bookService.findAllPublilsher();
+        model.addAttribute("bookTypeList",bookTypeList);
+        model.addAttribute("publisherList",publisherList);
+
         model.addAttribute("bookPage",bookPage);
         return "book/list";
     }

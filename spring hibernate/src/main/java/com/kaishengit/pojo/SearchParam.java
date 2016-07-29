@@ -20,6 +20,15 @@ public class SearchParam implements Serializable {
     private String propertyname;
     private Object value;
 
+    public SearchParam() {
+    }
+
+    public SearchParam(String type, String propertyname, Object value) {
+        this.type = type;
+        this.propertyname = propertyname;
+        this.value = value;
+    }
+
     public String getType() {
         return type;
     }
@@ -44,56 +53,58 @@ public class SearchParam implements Serializable {
         this.value = value;
     }
 
-    public static List<Object> builderSearchParam(HttpServletRequest request){
-        Map<String,String> para = Maps.newHashMap();
+    public static List<SearchParam> builderSearchParam(HttpServletRequest request){
         Enumeration<String> enumeration = request.getParameterNames();
         List<SearchParam> searchParamList = Lists.newArrayList();
         while(enumeration.hasMoreElements()){
             String param = enumeration.nextElement();
-            SearchParam searchParam = new SearchParam();
-            // TODO 进行测试1000
-            para.put(param,request.getParameter(param));
+            SearchParam searchParam = null;
+
+            Object value = request.getParameter(param);
+
 //            TODO 注意非空判断
-            if(param.startsWith("q_") && StringUtils.isNotEmpty(request.getParameter(param))){
-                String[] params = param.split("_");
-                if(params.length != 3){
-                    throw new RuntimeException("请求Url参数出错："+param);
+//            TODO Object进行非空判断 先null 后  toString
+            if(param.startsWith("q_") && value != null && StringUtils.isNotEmpty(value.toString())){
+                String[] params = param.split("_",4);
+
+                if(params.length != 4){
+                    throw new RuntimeException("地址栏查询字符串格式错误：："+param);
                 }
-                searchParam.setType(params[1]);
-                searchParam.setPropertyname(params[2]);
-                if(params[2].equals("bookname")){
-//                    TODO 注意判断文字中文问题
-                    searchParam.setValue(Strings.toUTF8(request.getParameter(param)));
-                }else {
-                    searchParam.setValue(new Float((request.getParameter(param))));
-                }
+
+                String type = params[2];
+                String valueType = params[1];
+                String propertyname = params[3];
+                value = converterType(value,valueType);
+
+                searchParam = new SearchParam(type,propertyname,value);
                 searchParamList.add(searchParam);
+
+                request.setAttribute(param,value);
             }
         }
-        List<Object> objectList = Lists.newArrayList();
-        objectList.add(searchParamList);
-        objectList.add(para);
-        return objectList;
-
+        return searchParamList;
     }
 
+    private static Object converterType(Object param, String valueType) {
+
+        if(valueType.equals("s")){
+            return Strings.toUTF8(param.toString());
+        }else if(valueType.equals("i")){
+            return Integer.valueOf(param.toString());
+        }else if(valueType.equals("f")){
+            return Float.valueOf(param.toString());
+        }else if(valueType.equals("d")){
+            return Double.valueOf(param.toString());
+        }else if(valueType.equals("b")){
+            return Boolean.valueOf(param.toString());
+        }else if(valueType.equals("c")){
+//            TODO 怎样转换字符串
+//            return new Character(param.toString().toCharArray());
+        }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return null;
+    }
 
 
 }

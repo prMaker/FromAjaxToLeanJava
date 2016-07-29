@@ -6,10 +6,7 @@ import com.kaishengit.util.Page;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.hibernate.transform.ResultTransformer;
 
 import javax.inject.Inject;
@@ -77,27 +74,40 @@ public class BaseDao<T,PK> {
         criteria.setMaxResults(page.getPageSize());
         return criteria.list();
     }
-
+    //            TODO 对于方法中需要多次用到的类要实现
     private Criteria getCriteria(List<SearchParam> searchParamList) {
         Criteria criteria = getSession().createCriteria(entityClass);
         for(SearchParam searchParam : searchParamList){
-            if(searchParam.getType().equals("like")){
-                criteria.add(Restrictions.like(searchParam.getPropertyname(),searchParam.getValue().toString(), MatchMode.ANYWHERE));
-            }
-            if(searchParam.getType().equals("le")){
-                criteria.add(Restrictions.le(searchParam.getPropertyname(),searchParam.getValue()));
-            }
-            if(searchParam.getType().equals("lt")){
-                criteria.add(Restrictions.lt(searchParam.getPropertyname(),searchParam.getValue()));
-            }
-            if(searchParam.getType().equals("ge")){
-                criteria.add(Restrictions.ge(searchParam.getPropertyname(),searchParam.getValue()));
-            }
-            if(searchParam.getType().equals("gt")){
-                criteria.add(Restrictions.gt(searchParam.getPropertyname(),searchParam.getValue()));
+            if(!searchParam.getPropertyname().contains("_or_")){
+                criteria.add(createCriterion(searchParam));
+            }else{
+                String[] params = searchParam.getPropertyname().split("_or_");
+                Disjunction disjunction = Restrictions.disjunction();
+                for(String pa : params){
+                    searchParam.setPropertyname(pa);
+                    disjunction.add(createCriterion(searchParam));
+                }
+                criteria.add(disjunction);
             }
         }
         return criteria;
+    }
+
+    private Criterion createCriterion(SearchParam searchParam) {
+        if(searchParam.getType().equalsIgnoreCase("like")){
+            return Restrictions.like(searchParam.getPropertyname(),searchParam.getValue().toString(), MatchMode.ANYWHERE);
+        }else if(searchParam.getType().equalsIgnoreCase("le")){
+            return Restrictions.le(searchParam.getPropertyname(),searchParam.getValue());
+        }else if(searchParam.getType().equalsIgnoreCase("lt")){
+            return Restrictions.lt(searchParam.getPropertyname(),searchParam.getValue());
+        }else if(searchParam.getType().equalsIgnoreCase("ge")){
+            return Restrictions.ge(searchParam.getPropertyname(),searchParam.getValue());
+        }else if(searchParam.getType().equalsIgnoreCase("gt")){
+            return Restrictions.gt(searchParam.getPropertyname(),searchParam.getValue());
+        }else if(searchParam.getType().equalsIgnoreCase("eq")){
+            return Restrictions.eq(searchParam.getPropertyname(),searchParam.getValue());
+        }
+        return null;
     }
 
     public Long countByCriteria(Criteria criteria) {

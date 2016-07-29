@@ -24,14 +24,34 @@
     <div class="well well-sm">
         <form method="get" class="form-inline">
             <div class="form-group">
-                <input type="text" placeholder="书籍名称" value="${pathVar.q_like_bookname}" name="q_like_bookname" class="form-control">
+                <input type="text" placeholder="书籍名称或作者" value="${q_s_like_bookname_or_bookauthor}" name="q_s_like_bookname_or_bookauthor" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <input type="text" placeholder="最低价格" value="${q_f_ge_bookprice}" name="q_f_ge_bookprice" class="form-control">
             </div>
             <div class="form-group">
-                <input type="text" placeholder="最低价格" value="${pathVar.q_ge_bookprice}" name="q_ge_bookprice" class="form-control">
+                <input type="text" placeholder="最高价格" value="${q_f_le_bookprice}" name="q_f_le_bookprice" class="form-control">
             </div>
+
             <div class="form-group">
-                <input type="text" placeholder="最高价格" value="${pathVar.q_le_bookprice}" name="q_le_bookprice" class="form-control">
+                <select name="q_i_eq_bookType.id" class="form-control">
+                    <option value="">请选择类型</option>
+                    <c:forEach items="${bookTypeList}" var="type">
+                        <option ${requestScope['q_i_eq_bookType.id'] == type.id ? 'selected' : ''} value="${type.id}" ${typeid == type.id ? 'selected' : '' }>${type.booktype}</option>
+                    </c:forEach>
+                </select>
             </div>
+
+            <div class="form-group">
+                <select name="q_i_eq_publisher.id" class="form-control">
+                    <option value="">请选择出版社</option>
+                    <c:forEach items="${publisherList}" var="pub">
+                        <option ${requestScope['q_i_eq_publisher.id'] == pub.id ? 'selected' : ''} value="${pub.id}" ${pubid == pub.id ? 'selected' : ''} >${pub.pubname}</option>
+                    </c:forEach>
+                </select>
+            </div>
+
             <button class="btn btn-default">搜索</button>
         </form>
     </div>
@@ -81,7 +101,7 @@
             prev:'上一页',
             next:'下一页',
             last:'末页',
-            href:'?q_like_bookname=${pathVar.q_like_bookname}&q_ge_bookprice=${pathVar.q_ge_bookprice}&q_ge_bookprice=${pathVar.q_le_bookprice}&p={{number}}'
+            href:'?q_s_like_bookname_or_bookauthor=${q_s_like_bookname_or_bookauthor}&q_f_ge_bookprice=${q_f_ge_bookprice}&q_f_le_bookprice=${q_f_le_bookprice}&p={{number}}&q_s_like_bookauthor=${q_s_like_bookauthor}&q_i_eq_bookType.id=${requestScope['q_i_eq_bookType.id']}'
         });
     });
 
