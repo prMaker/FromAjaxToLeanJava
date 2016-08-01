@@ -5,8 +5,20 @@
 <struts>
 
     <!--<constant name="struts.action.extension" value="do"/>-->
+    <package name="myStrutsDefault" extends="struts-default" abstract="true">
+        <interceptors>
+            <interceptor name="myTimer" class="com.kaishengit.action.interceptor.MyTimerInterceptor"/>
+            <interceptor-stack name="myInterceptor">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="myTimer"/>
+            </interceptor-stack>
+        </interceptors>
 
-    <package name="myPackage" extends="struts-default">
+        <default-interceptor-ref name="myInterceptor"/>
+    </package>
+    
+    <package name="home" extends="myStrutsDefault">
+
         <action name="home" class="com.kaishengit.action.HomeAction" method="home">
             <result name="success" type="dispatcher">
                 /WEB-INF/views/home.jsp
@@ -14,7 +26,25 @@
         </action>
     </package>
 
-    <package name="user" namespace="/user" extends="struts-default">
+    <package name="user" namespace="/user" extends="myStrutsDefault">
+
+
+
+        <!--<interceptors>-->
+            <!--<interceptor-stack name="myStack">-->
+                <!--<interceptor-ref name="defaultStack"/>-->
+                <!--<interceptor-ref name="timer"/>-->
+            <!--</interceptor-stack>-->
+        <!--</interceptors>-->
+
+        <!--<default-interceptor-ref name="myStack"/>-->
+
+        <!--<action name="home" class="com.kaishengit.action.HomeAction" method="home">-->
+            <!--<result name="success" type="dispatcher">-->
+                <!--/WEB-INF/views/home.jsp-->
+            <!--</result>-->
+        <!--</action>-->
+
         <action name="list" class="com.kaishengit.action.UserAction" method="list">
             <result name="success" type="dispatcher">
                 /WEB-INF/views/list.jsp

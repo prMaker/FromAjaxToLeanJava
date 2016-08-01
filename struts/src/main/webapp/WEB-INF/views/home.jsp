@@ -14,6 +14,8 @@
 
 Hello!Struts2!
 
+<h2>${sessionScope.hi}</h2>
+
 <a href="/user/list">User</a>
 
 </body>
