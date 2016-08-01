@@ -99,7 +99,7 @@ public class SearchParam implements Serializable {
             return Boolean.valueOf(param.toString());
         }else if(valueType.equals("c")){
 //            TODO 怎样转换字符串
-//            return new Character(param.toString().toCharArray());
+            return Character.valueOf(param.toString().toCharArray()[0]);
         }
 
 

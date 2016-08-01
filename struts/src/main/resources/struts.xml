@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <!--<constant name="struts.action.extension" value="do"/>-->
+
+    <package name="myPackage" extends="struts-default">
+        <action name="home" class="com.kaishengit.action.HomeAction" method="home">
+            <result name="success" type="dispatcher">
+                /WEB-INF/views/home.jsp
+            </result>
+        </action>
+    </package>
+
+    <package name="user" namespace="/user" extends="struts-default">
+        <action name="list" class="com.kaishengit.action.UserAction" method="list">
+            <result name="success" type="dispatcher">
+                /WEB-INF/views/list.jsp
+            </result>
+        </action>
+
+        <action name="newData" class="com.kaishengit.action.UserAction" method="newData">
+            <result name="success" type="dispatcher">
+                /WEB-INF/views/new.jsp
+            </result>
+        </action>
+
+        <action name="new" class="com.kaishengit.action.UserAction" method="newUser">
+            <result name="success" type="redirectAction">
+                <param name="actionName">list</param>
+                <param name="namespace">/user</param>
+            </result>
+        </action>
+
+    </package>
+
+
+</struts>

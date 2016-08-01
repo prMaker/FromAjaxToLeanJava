@@ -1,6 +1,5 @@
 package com.kaishengit.dao;
 
-import com.kaishengit.pojo.Book;
 import com.kaishengit.pojo.SearchParam;
 import com.kaishengit.util.Page;
 import org.hibernate.Criteria;
@@ -10,15 +9,14 @@ import org.hibernate.criterion.*;
 import org.hibernate.transform.ResultTransformer;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/7/28.
  */
-public class BaseDao<T,PK> {
+public class BaseDao<T,PK extends Serializable> {
 
     @Inject
     private SessionFactory sessionFactory;

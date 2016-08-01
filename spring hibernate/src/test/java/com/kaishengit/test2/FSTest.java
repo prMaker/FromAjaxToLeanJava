@@ -2,6 +2,7 @@ package com.kaishengit.test2;
 
 
 import com.google.common.collect.Sets;
+import org.junit.*;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -31,5 +32,16 @@ public class FSTest {
         }
 
     }
+
+    @org.junit.Test
+    public void splitTest(){
+        String split = "a.b.c.d";
+        if (split.contains(".")){
+            split.replace(".","_");
+        }
+        System.out.println(split);
+        String[] strings = split.split("_");
+    }
+
 
 }
