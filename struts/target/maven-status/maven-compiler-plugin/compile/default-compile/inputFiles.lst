@@ -1,5 +1,6 @@
 D:\project\struts\src\main\java\com\kaishengit\action\BaseAction.java
 D:\project\struts\src\main\java\com\kaishengit\pojo\User.java
+D:\project\struts\src\main\java\com\kaishengit\action\interceptor\LoginInterceptor.java
 D:\project\struts\src\main\java\com\kaishengit\action\HomeAction.java
 D:\project\struts\src\main\java\com\kaishengit\action\interceptor\MyTimerInterceptor.java
 D:\project\struts\src\main\java\com\kaishengit\action\UserAction.java

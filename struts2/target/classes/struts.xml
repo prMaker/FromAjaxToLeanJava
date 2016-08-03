@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+
+    <!--<package name="login" extends="struts-default">-->
+
+        <!--<action name="index" class="com.kaishengit.action.HomeAction" method="toLogin">-->
+            <!--<result name="success">-->
+                <!--/WEB-INF/views/login.jsp-->
+            <!--</result>-->
+        <!--</action>-->
+
+    <!--</package>-->
+
+
+    <package name="myLogin" extends="struts-default">
+        <!--
+            name : url中请求的名字
+            class : Action类的完全限定名
+        -->
+        <action name="index" class="com.kaishengit.action.HomeAction">
+            <!--
+                name : Action中方法的返回值
+            -->
+            <result name="success">/WEB-INF/views/login.jsp</result>
+        </action>
+
+    </package>
+
+
+
+
+
+    <!--<package name="MyPackage" extends="struts-default" abstract="true">-->
+
+        <!--<interceptors>-->
+            <!--<interceptor name="myInteceptor" class="com.kaishengit.action.interceptor.LoginInterceptor"/>-->
+            <!--<interceptor-stack name="myInterceptorStack">-->
+                <!--<interceptor-ref name="defaultStack"/>-->
+                <!--<interceptor-ref name="myInteceptor"/>-->
+            <!--</interceptor-stack>-->
+        <!--</interceptors>-->
+
+        <!--<default-interceptor-ref name="myInterceptorStack"/>-->
+
+        <!--<global-results>-->
+            <!--<result name="input" type="redirectAction">-->
+                <!--&lt;!&ndash;/WEB-INF/views/login.jsp&ndash;&gt;-->
+                <!--<param name="namespace">/</param>-->
+                <!--<param name="actionName">loginView</param>-->
+
+            <!--</result>-->
+        <!--</global-results>-->
+    <!--</package>-->
+
+
+    <!--<package name="loginJsp" extends="struts-default">-->
+
+        <!--<action name="loginView" class="com.kaishengit.action.HomeAction" method="loginView">-->
+            <!--<result>-->
+                <!--/WEB-INF/views/login.jsp-->
+            <!--</result>-->
+        <!--</action>-->
+
+        <!--<action name="login" class="com.kaishengit.action.HomeAction" method="login">-->
+            <!--<result>-->
+                <!--/WEB-INF/views/home.jsp-->
+            <!--</result>-->
+        <!--</action>-->
+
+
+    <!--</package>-->
+
+
+
+
+
+
+
+
+
+
+
+</struts>

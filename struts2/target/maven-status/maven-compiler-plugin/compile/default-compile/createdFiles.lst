@@ -1,0 +1,3 @@
+com\kaishengit\action\BaseAction.class
+com\kaishengit\action\interceptor\LoginInterceptor.class
+com\kaishengit\action\HomeAction.class

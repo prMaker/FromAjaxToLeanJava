@@ -13,13 +13,9 @@
 </head>
 <body>
 
-List Jsp
+<h3><strong>List Jsp</strong></h3>
 
-<a href="/user/newData">新建</a>
 <ul>
-
-    <h3>${sessionScope.hello}</h3>
-
     <c:forEach items="${names}" var="name">
         <li>${name}</li>
     </c:forEach>

@@ -19,27 +19,31 @@ import java.util.Map;
 /**
  * Created by Administrator on 2016/8/1.
  */
-public class UserAction extends ActionSupport implements SessionAware,ServletRequestAware,ServletResponseAware,ServletContextAware,ApplicationAware{
+public class UserAction extends BaseAction {
 
-//    private String name;
-//    private String address;
-
-    private User user;
     private List<String> names;
-    private Map<String,Object> session;
-    private HttpServletRequest httpServletRequest;
-    private HttpServletResponse httpServletResponse;
-    private ServletContext servletContext;
-    private Map<String,Object> application;
+    private String username;
+    private String password;
+    private Map<String,Object> session = getSession();
 
-    public UserAction() {
+    public UserAction() {}
+
+
+    public String indexData(){
+        return "success";
     }
 
+
+    public String login(){
+        if("tom".equals(username) && "123".equals(password)){
+            session.put("username",username);
+            return "success";
+        }
+        return "login";
+    }
+
+
     public String list(){
-
-        session.put("hello","Session");
-        ServletContext servletContext = httpServletRequest.getServletContext();
-
 
         names = new ArrayList<>();
         names.add("Tom");
@@ -48,18 +52,30 @@ public class UserAction extends ActionSupport implements SessionAware,ServletReq
         return "success";
     }
 
-    public String newUser() throws UnsupportedEncodingException {
-        System.out.println("name:" + user.getName() + " address:" + new String(user.getAddress().getBytes("ISO8859-1"),"UTF-8"));
-       return "success";
+
+
+    public String getUsername() {
+        return username;
     }
 
-// TODO 乱码解决问题
-    public String newData(){
-        return "success";
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 //    get set
 
+
+    public void setSession(Map<String, Object> session) {
+        this.session = session;
+    }
 
     public List<String> getNames() {
         return names;
@@ -69,36 +85,4 @@ public class UserAction extends ActionSupport implements SessionAware,ServletReq
         this.names = names;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @Override
-    public void setSession(Map<String, Object> map) {
-        this.session = map;
-    }
-
-    @Override
-    public void setServletRequest(HttpServletRequest httpServletRequest) {
-        this.httpServletRequest = httpServletRequest;
-    }
-
-    @Override
-    public void setServletResponse(HttpServletResponse httpServletResponse) {
-        this.httpServletResponse = httpServletResponse;
-    }
-
-    @Override
-    public void setApplication(Map<String, Object> map) {
-        this.application = map;
-    }
-
-    @Override
-    public void setServletContext(ServletContext servletContext) {
-        this.servletContext = servletContext;
-    }
 }

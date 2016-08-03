@@ -1,9 +1,5 @@
 package com.kaishengit.action;
 
-import com.opensymphony.xwork2.ActionContext;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -11,24 +7,31 @@ import java.util.Map;
  */
 public class HomeAction extends BaseAction{
 
-    private Map<String,Object> session;
+    private Map<String,Object> session = getSession();
+    private String username;
+    private String password;
 
-    public String home(){
-        session = ActionContext.getContext().getSession();
-        session.put("hi","123456789");
-        System.out.println("Hello!Struts2!");
-        return "success";
+
+    public String login(){
+        if("tom".equals(username) && "123".equals(password)){
+            return "success";
+        }
+        return LOGIN;
     }
 
-//    set get
-
-
-    @Override
-    public Map<String, Object> getSession() {
-        return session;
+    public String getUsername() {
+        return username;
     }
 
-    public void setSession(Map<String, Object> session) {
-        this.session = session;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
