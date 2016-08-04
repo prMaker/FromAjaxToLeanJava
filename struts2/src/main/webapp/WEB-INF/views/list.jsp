@@ -3,38 +3,33 @@
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2016/8/3
-  Time: 21:13
+  Time: 21:16
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>login</title>
+    <title>Title</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 </head>
 <body>
 
 <div class="container">
 
-    <h2>Login View</h2>
+    <h2>HomeList</h2>
 
-    <c:if test="${param.code == '10001'}">
-        请登录后再试
+    <c:if test="${param.code == '10002'}">
+        <div class="text-danger">添加错误
+        </div>
     </c:if>
-    <c:if test="${param.code == '10004'}">
-        密码错误，请重试
-    </c:if>
+    <c:forEach items="${names}" var="name">
+        <div>${name}</div>
+    </c:forEach>
 
-    <form action="/login" method="post">
-
-        <input type="text" name="username" autofocus>
-        <input type="text" name="password">
-        <button>Login</button>
-
-    </form>
-
+    <a href="/user/tonew">新增</a>
 
 </div>
+
 
 </body>
 </html>
