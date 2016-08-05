@@ -1,0 +1,14 @@
+com\kaishengit\pojo\Publisher.class
+com\kaishengit\util\Page.class
+com\kaishengit\pojo\BookType.class
+com\kaishengit\service\BookService.class
+com\kaishengit\action\BookAction.class
+com\kaishengit\dao\BookTypeDao.class
+com\kaishengit\pojo\SearchParam.class
+com\kaishengit\exception\NotFoundException.class
+com\kaishengit\action\BaseAction.class
+com\kaishengit\dao\PublisherDao.class
+com\kaishengit\dao\BookDao.class
+com\kaishengit\dao\BaseDao.class
+com\kaishengit\util\Strings.class
+com\kaishengit\pojo\Book.class
